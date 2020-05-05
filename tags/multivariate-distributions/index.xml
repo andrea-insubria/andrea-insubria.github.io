@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Multivariate distributions on Andrea Martinelli website</title>
+    <link>/tags/multivariate-distributions/</link>
+    <description>Recent content in Multivariate distributions on Andrea Martinelli website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>it</language>
+    <lastBuildDate>Sat, 04 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/multivariate-distributions/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Symmetric distributions</title>
+      <link>/blog/2020/04/04/symmetric-distributions/</link>
+      <pubDate>Sat, 04 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2020/04/04/symmetric-distributions/</guid>
+      <description>Quelli che seguono sono appunti disordinati sulle distribuzioni uniformi sul disco e la circonferenza. Queste sono l’ingrediente base per l’introduzione delle distribuzioni sferiche e, in seguito, \(\ell^p\)-simmetriche.
+  Spero non ci siano errori, in caso contrario fatemelo sapere
+ In this section we study the uniform distribution on the disc and on the circumference, in these cases many properties have a simple intuitive meaning. In the following section we will generalize these distribution to the \(d\)–dimensional case.</description>
+    </item>
+    
+  </channel>
+</rss>
