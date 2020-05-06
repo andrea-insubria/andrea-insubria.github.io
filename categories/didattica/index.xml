@@ -2,31 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Didattica on Andrea Martinelli website</title>
-    <link>/categories/didattica/</link>
+    <link>/andrea-insubria/andrea-insubria.github.io/categories/didattica/</link>
     <description>Recent content in Didattica on Andrea Martinelli website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>it</language>
     
-	<atom:link href="/categories/didattica/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/andrea-insubria/andrea-insubria.github.io/categories/didattica/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Didattica</title>
-      <link>/didattica/</link>
+      <link>/andrea-insubria/andrea-insubria.github.io/didattica/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/didattica/</guid>
-      <description>Avviso  Per ragioni organizzative gli studenti che devono sostenere esami di corsi tenuti precedentemente all’Anno Accademico 2016-2017 devono contattare il docente.
-  Corsi attivi  Statistica A (A.A. 2015-2016) Statistica B (A.A. 2016-2017) Statistica A (A.A. 2017-2018)   Corsi dei precedenti a.a. I corsi dei precedenti anni accademici sono:
+      <guid>/andrea-insubria/andrea-insubria.github.io/didattica/</guid>
+      <description>Avviso
+Per ragioni organizzative gli studenti che devono sostenere esami di corsi tenuti precedentemente all’Anno Accademico attuale devono contattare il docente.
+ Corsi attivi  Statistica A (A.A. 2015-2016) Statistica B (A.A. 2016-2017) Statistica A (A.A. 2017-2018)   Corsi dei precedenti a.a. I corsi dei precedenti anni accademici sono:
  Statistica I - F49030 Statistica II - F49038 Economia Matematica II - F49029 Statistica e Finanza (Statistica e Applicazioni) A.</description>
     </item>
     
     <item>
       <title>Statistica A</title>
-      <link>/pagine_didattica/statistica_a_2015_2016/</link>
+      <link>/andrea-insubria/andrea-insubria.github.io/pagine_didattica/statistica_a_2015_2016/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/pagine_didattica/statistica_a_2015_2016/</guid>
+      <guid>/andrea-insubria/andrea-insubria.github.io/pagine_didattica/statistica_a_2015_2016/</guid>
       <description>Programma
 Modalità di esame
 Orari lezioni
