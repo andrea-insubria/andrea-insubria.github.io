@@ -232,11 +232,11 @@
 
                         <div id="post-content">
                           
-<script src="/andrea-insubria/andrea-insubria.github.io/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<script src="/andrea-insubria/andrea-insubria.github.io/rmarkdown-libs/clipboard/clipboard.min.js"></script>
-<link href="/andrea-insubria/andrea-insubria.github.io/rmarkdown-libs/primer-tooltips/build.css" rel="stylesheet" />
-<link href="/andrea-insubria/andrea-insubria.github.io/rmarkdown-libs/klippy/css/klippy.min.css" rel="stylesheet" />
-<script src="/andrea-insubria/andrea-insubria.github.io/rmarkdown-libs/klippy/js/klippy.min.js"></script>
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/rmarkdown-libs/clipboard/clipboard.min.js"></script>
+<link href="/rmarkdown-libs/primer-tooltips/build.css" rel="stylesheet" />
+<link href="/rmarkdown-libs/klippy/css/klippy.min.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/klippy/js/klippy.min.js"></script>
 
 
 <div id="cosa-si-fa-oggi" class="section level2">
@@ -304,15 +304,15 @@ datiProvince$codice_regione = factor(datiProvince$codice_regione)</code></pre>
 <h2>Rappresentazioni grafiche</h2>
 <p>A questo punto siamo pronti per un’analisi esplorativa dei dati, iniziamo dai dati a livello nazionale</p>
 <pre class="r"><code>plot(datiNazionali$data, datiNazionali$totale_casi, type = &#39;l&#39;, xlab = &#39;Data&#39;, ylab = &#39;Totale casi&#39;, main = &#39;Andamento nazionale totale casi&#39;, lwd = 1.5, col = &#39;darkred&#39;)</code></pre>
-<p><img src="/andrea-insubria/andrea-insubria.github.io/blog/post_analisi_R_files/figure-html/unnamed-chunk-6-1.png" width="864" />
+<p><img src="/blog/post_analisi_R_files/figure-html/unnamed-chunk-6-1.png" width="864" />
 lo stesso risultato lo si può ottenere selezionando il dataframe contenente le variabili per l’ascissa e l’ordinata, come segue</p>
 <pre class="r"><code>plot(datiNazionali[,c(&quot;data&quot;,&quot;totale_casi&quot;)], type = &#39;l&#39;, xlab = &#39;Data&#39;, ylab = &#39;Totale casi&#39;, main = &#39;Andamento nazionale totale casi&#39;, lwd = 1.5, col = &#39;darkred&#39;)</code></pre>
-<p><img src="/andrea-insubria/andrea-insubria.github.io/blog/post_analisi_R_files/figure-html/unnamed-chunk-7-1.png" width="864" /></p>
+<p><img src="/blog/post_analisi_R_files/figure-html/unnamed-chunk-7-1.png" width="864" /></p>
 <p>In modo simile possiamo rappresentare simultaneamente più variabili, ma per fare questo invece di utilizzare la funzione <code>plot</code> utilizziamo <code>matplot</code>:</p>
 <pre class="r"><code>vars = c(&#39;dimessi_guariti&#39;, &#39;deceduti&#39;, &#39;totale_ospedalizzati&#39;)
 matplot(datiNazionali$data, datiNazionali[,vars], type = &#39;l&#39;, xlab = &#39;Data&#39;, ylab = &#39;Numerosità&#39;, main = &#39;Andamento nazionale&#39;, lwd = 1.5)
 legend(&#39;topleft&#39;, vars, inset = .05, bty = &#39;n&#39;, lty = 1:3, col = 1:3, lwd = 1.5)</code></pre>
-<p><img src="/andrea-insubria/andrea-insubria.github.io/blog/post_analisi_R_files/figure-html/unnamed-chunk-8-1.png" width="864" /></p>
+<p><img src="/blog/post_analisi_R_files/figure-html/unnamed-chunk-8-1.png" width="864" /></p>
 <p>Con <code>matplot</code> le date però vengono visualizzate convertendole in valori numerici, il che non rende il grafico particolarmente leggibile, possiamo aggirare questo problema utilizzando la funzione <code>plot</code> come fatto in precedenza</p>
 <pre class="r"><code>vars = c(&#39;dimessi_guariti&#39;, &#39;deceduti&#39;, &#39;totale_ospedalizzati&#39;)
 plot(datiNazionali[,c(&#39;data&#39;, vars[1])], type = &#39;l&#39;, xlab = &#39;Data&#39;, ylab = &#39;Numerosità&#39;, main = &#39;Andamento nazionale&#39;, lwd = 1.5)
@@ -324,7 +324,7 @@ lapply(2:3, foo)</code></pre>
 ## [[2]]
 ## NULL</code></pre>
 <pre class="r"><code>legend(&#39;topleft&#39;, vars, inset = .05, bty = &#39;n&#39;, lty = 1:3, col = 1:3, lwd = 1.5)</code></pre>
-<p><img src="/andrea-insubria/andrea-insubria.github.io/blog/post_analisi_R_files/figure-html/unnamed-chunk-9-1.png" width="864" /></p>
+<p><img src="/blog/post_analisi_R_files/figure-html/unnamed-chunk-9-1.png" width="864" /></p>
 <p>Notiamo che in questo caso ho inizializzato il grafico con la prima traccia, si sarebbe potuto fare anche a meno di fare la traccia, dopo di che ho aggiunto le altre tracce, per fare questo ho definito la funzione <code>foo</code> che calcolata in <span class="math inline">\(i\)</span> aggiunge al grafico la linea della <span class="math inline">\(i\)</span>-esima variabile della lista <code>vars</code>, quindi con <code>lapply</code> ho fatto aggiungere tutte le tracce mancanti. In questo modo variando il vettore <code>vars</code> possiamo ottenere il grafico che vogliamo, volendo possiamo definire direttamente una funzione che faccia questo per un generico vettore di variabili <code>vars</code>:</p>
 <pre class="r"><code>plotVars &lt;- function(vars){
     nVars = length(vars) ## numero variabili statistiche
@@ -337,7 +337,7 @@ lapply(2:3, foo)</code></pre>
 
 vars = c(&quot;ricoverati_con_sintomi&quot;, &quot;terapia_intensiva&quot;, &quot;totale_ospedalizzati&quot;, &quot;isolamento_domiciliare&quot;)
 plotVars(vars)</code></pre>
-<p><img src="/andrea-insubria/andrea-insubria.github.io/blog/post_analisi_R_files/figure-html/unnamed-chunk-10-1.png" width="864" /></p>
+<p><img src="/blog/post_analisi_R_files/figure-html/unnamed-chunk-10-1.png" width="864" /></p>
 <p>In questo caso abbiamo aggiunto al plot iniziale anche i limiti per l’asse delle ordinate, in modo tale che tutte le serie rientrino nei limiti del grafico, e la variabile <code>nVar</code>, che il numero di variabili che devono essere inserite nel grafico, questo perché il vettore <code>vars</code> ha una lunghezza non prestabilita.</p>
 </div>
 <div id="come-andare-avanti" class="section level2">
@@ -386,7 +386,7 @@ levels(datiRegioni$denominazione_regione)</code></pre>
 <p>Il codice scritto sopra per fare questo non penso sia il più semplice, ma funziona, e ome si vede ora abbiamo le venti regioni italiane.</p>
 <p>A questo punto possiamo fare una prima rappresentazione grafica</p>
 <pre class="r"><code>plot(datiRegioni$data, datiRegioni$totale_casi, pch = 20, col = rainbow(20)[datiRegioni$codice_regione], xlab = &#39;Data&#39;, ylab = &#39;Numero casi&#39;)</code></pre>
-<p><img src="/andrea-insubria/andrea-insubria.github.io/blog/post_analisi_R_files/figure-html/unnamed-chunk-13-1.png" width="864" />
+<p><img src="/blog/post_analisi_R_files/figure-html/unnamed-chunk-13-1.png" width="864" />
 A questo punto si potrebbe anche aggiungere la legenda, ma ovviamente il grafico è di difficile lettura, quindi è meglio cambiare rappresentazione o passare a più grafici per descrivere lo stesso fenomeno. Questo lo vedremo un’altra volta.</p>
 <p>Come si può fare per produrre un grafico analogo al precedente, ma con le linee al posto dei punti? Posso usare la funzione <code>plot</code> come fatto in precedenza?</p>
 <p>Per risolvere questo problema si consiglia di studiare la funzioni <code>aggregate</code> e <code>split</code>.</p>
