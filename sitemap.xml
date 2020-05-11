@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/covid/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/newpost/</loc>
+    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/</loc>
+    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/didattica/</loc>
+    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/2020/04/29/analisi_r/</loc>
+    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r-intro/</loc>
+    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/2020/04/27/sird/</loc>
+    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/2020/04/27/covid_eur/</loc>
+    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/2020/04/16/covid_reg/</loc>
+    <lastmod>2020-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/2020/04/09/covid_naz/</loc>
+    <lastmod>2020-04-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/distribution-theory/</loc>
+    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/multivariate-distributions/</loc>
+    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/probability/</loc>
+    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/2020/04/04/symmetric-distributions/</loc>
+    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/uniform-distribution/</loc>
+    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/contact/</loc>
+  </url>
+  
+  <url>
+    <loc>/categories/didattica/</loc>
+  </url>
+  
+  <url>
+    <loc>/didattica/</loc>
+  </url>
+  
+  <url>
+    <loc>/pagine_didattica/didattica/</loc>
+  </url>
+  
+  <url>
+    <loc>/pagine_didattica/</loc>
+  </url>
+  
+  <url>
+    <loc>/ricerca/</loc>
+  </url>
+  
+  <url>
+    <loc>/risorse/</loc>
+  </url>
+  
+  <url>
+    <loc>/pagine_didattica/statistica_a_2015_2016/</loc>
+  </url>
+  
+</urlset>
