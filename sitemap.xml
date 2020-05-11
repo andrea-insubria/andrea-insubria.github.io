@@ -110,10 +110,6 @@
   </url>
   
   <url>
-    <loc>/pagine_didattica/didattica/</loc>
-  </url>
-  
-  <url>
     <loc>/pagine_didattica/</loc>
   </url>
   
@@ -123,6 +119,10 @@
   
   <url>
     <loc>/risorse/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/1/01/01/statistica-a/</loc>
   </url>
   
   <url>
