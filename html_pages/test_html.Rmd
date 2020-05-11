@@ -1,0 +1,367 @@
+---
+banner: img/banners/covid.png
+title: "Un'analisi esplorativa grafica dei dati sul covid-19"
+date: '2020-04-09'
+output: html_document
+tags:
+- covid
+slug: covid_naz
+---
+
+<style type="text/css">
+.main-container {
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+
+```{r echo=FALSE, warning=FALSE, include=FALSE}
+require(plotly)
+require(tidyverse)
+require(sf)
+
+prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dati_protezione_civile'
+
+temp = tail(sort(dir(paste(prefixDir,'/data/', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
+oggi = gsub('_', '-', substr(temp, nchar(temp)-15, nchar(temp)-6))
+
+if ((as.Date(oggi)<Sys.Date()) & (as.numeric(format(Sys.time(), '%H')) > 16) ){
+source(paste0(prefixDir,'/importazione_dati.R'))
+temp = tail(sort(dir(paste(prefixDir,'/data/', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
+}
+
+
+load(temp)
+italyShpRegions <- st_read(paste(prefixDir,'/italy_shape/regioni/Reg01012020_g_WGS84.shp', sep = ''))
+# 
+
+## functions definitions ####
+filterWeek <- function(x){
+  weights = rep(1/7,7)
+  y = stats::filter(x, weights, method = 'convolution', side = 1)
+  y
+}
+
+
+```
+## Quadro generale{.tabset}
+
+### Nazionale 
+
+:::: {style="display: flex;"}
+
+
+::: {}
+#### Tamponi
+
+```{r echo=FALSE}
+datiNazionali$nuovi_tamponi = c(datiNazionali$tamponi[1], diff(datiNazionali$tamponi))
+datiNazionali$nuovi_testati = c(NA, diff(datiNazionali$casi_testati))
+datiNazionali$nuovi_decessi = c(NA, diff(datiNazionali$deceduti))
+datiNazionali$nuovi_guariti = c(NA, diff(datiNazionali$dimessi_guariti))
+
+## setting fonts for plotly plots ####
+f1 <- list(family = "Arial, sans-serif",
+           size = 18,
+           color = "lightgrey" )
+f2 <- list( family = "Old Standard TT, serif",
+            size = 14,
+            color = "black" )
+
+
+## plotly graph national data ####
+## nuovi casi e variazione positivi
+## setting axis
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di tamponi effettuati quotidianamente', mirror = 'all', titlefont = f1) 
+
+plyNazTamponi = datiNazionali %>% 
+  plot_ly(x = ~data, y = ~nuovi_tamponi, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Tamponi quotidiani</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = 'Tamponi del giorno') %>% 
+  add_lines(x = ~data, y = ~filterWeek(datiNazionali$nuovi_tamponi), name = "Serie lisciata") %>% 
+  add_lines(x = ~data, y = ~nuovi_testati, hovertemplate = paste('<b>Individui testati</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = "Individui testati") %>% 
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95)) 
+plyNazTamponi
+```
+
+#### Nuovi positivi e testati
+```{r echo=FALSE}
+## nuovi positivi vs tamponi
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Nuovi casi positivi', mirror = 'all', titlefont = f1)
+
+polyEstimate = loess(data = datiNazionali, nuovi_positivi ~ nuovi_tamponi)
+newData = seq(0, max(datiNazionali$nuovi_tamponi), length.out = 200)
+previsione = predict(polyEstimate, data.frame(nuovi_tamponi = newData))
+
+markerPers = list(color = ~as.double(data),
+                  colorscale = 'Viridis',
+                  colorbar = list(
+                    title = 'Data',
+                    tickvals = round(quantile(as.double(datiNazionali$data), seq(0,.75, by = .25))),
+                    ticktext = datiNazionali$data[as.numeric(datiNazionali$data) %in% round(quantile(as.double(datiNazionali$data), seq(0,.75, by = .25)))],
+                    tickmode = 'array'
+                  )
+)
+
+
+plyTampCases = plot_ly(data = datiNazionali, x = ~newData, y = ~previsione, type = 'scatter', mode = 'lines', showlegend = FALSE, color = I('orange'), name = "Interpolata", hovertemplate = paste('<b>Positivi stimati</b>: %{y}', '<br><b>Tamponi stimati</b>: %{x}<br>')) %>%
+   add_trace(x = ~nuovi_tamponi, y = ~nuovi_positivi,  type = 'scatter', mode = 'markers', marker = markerPers,  hovertemplate = paste('<b>Num. positivi</b>: %{y}', '<br><b>Tamponi</b>: %{x}<br>'), name = '') %>% 
+  layout(xaxis = axis_x, yaxis = axis_y)
+plyTampCases
+```
+
+#### Nuovi individui testati e positivi
+```{r echo=FALSE, warning=FALSE}
+## nuovi positivi vs tamponi
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Nuovi casi positivi', mirror = 'all', titlefont = f1)
+
+polyEstimate = loess(data = datiNazionali, nuovi_positivi ~ nuovi_testati)
+newData = seq(min(datiNazionali$nuovi_testati, na.rm = TRUE), max(datiNazionali$nuovi_testati, na.rm = TRUE), length.out = 200)
+previsione = predict(polyEstimate, data.frame(nuovi_testati = newData))
+
+markerPers = list(color = ~as.double(data),
+                  colorscale = 'Viridis',
+                  colorbar = list(
+                    title = 'Data',
+                    tickvals = round(quantile(as.double(datiNazionali$data), seq(0,.75, by = .25))),
+                    ticktext = datiNazionali$data[as.numeric(datiNazionali$data) %in% round(quantile(as.double(datiNazionali$data), seq(0,.75, by = .25)))],
+                    tickmode = 'array'
+                  )
+)
+
+
+plyTampCases = plot_ly(data = datiNazionali, x = ~newData, y = ~previsione, type = 'scatter', mode = 'lines', showlegend = FALSE, color = I('orange'), name = "Interpolata", hovertemplate = paste('<b>Positivi stimati</b>: %{y}', '<br><b>Testati stimati</b>: %{x}<br>')) %>%
+   add_trace(x = ~nuovi_testati, y = ~nuovi_positivi,  type = 'scatter', mode = 'markers', marker = markerPers,  hovertemplate = paste('<b>Num. testati</b>: %{y}', '<br><b>Tamponi</b>: %{x}<br>'), name = '') %>% 
+  layout(xaxis = axis_x, yaxis = axis_y)
+plyTampCases
+
+```
+
+
+:::
+
+::: {}
+
+#### Positivi
+
+```{r echo=FALSE}
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1) 
+
+plyNazNuovi = datiNazionali %>% 
+  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi infetti</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi infetti') %>% 
+  add_lines(x = ~data, y = ~variazione_totale_positivi, hovertemplate = paste('<b>Saldo positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Saldo positivi") %>% 
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95)) 
+
+plyNazNuovi
+
+```
+
+```{r echo=FALSE}
+# ## plot tamponi e positivi  ####
+plyDecPos = plot_ly(data = datiNazionali, x = ~data) %>%
+  add_bars(y = ~ricoverati_con_sintomi, name = "Ricoverati", hovertemplate = paste('<b>Ricoverati</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
+  add_bars(y = ~isolamento_domiciliare, name = 'Isolamento', hovertemplate = paste('<b>Isolamento</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
+    add_bars(y = ~terapia_intensiva, name = 'Intensiva', hovertemplate = paste('<b>Intensiva</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>% 
+  layout(title = 'Decomposizione positivi totali', yaxis = list(title = 'Numerosità'), barmode = 'stack', legend = list(x = .05, y = .95))
+
+plyDecPos
+```
+
+
+
+#### Decessi e guariti
+```{r echo=FALSE, warning=FALSE}
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numerosità', mirror = 'all', titlefont = f1) 
+
+plyNazDec = datiNazionali %>% 
+  plot_ly(x = ~data, y = ~nuovi_decessi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi decessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi decessi') %>% 
+  add_lines(x = ~data, y = ~nuovi_guariti, hovertemplate = paste('<b>Dimessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Dimessi") %>% 
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95)) 
+
+plyNazDec
+
+```
+
+
+
+
+
+
+
+:::
+
+::::
+
+### Regionale
+
+
+:::: {style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; grid-auto-flow: row"}
+
+
+::: {}
+#### Tamponi
+
+```{r echo=FALSE}
+datiNazionali$nuovi_tamponi = c(datiNazionali$tamponi[1], diff(datiNazionali$tamponi))
+datiNazionali$nuovi_testati = c(NA, diff(datiNazionali$casi_testati))
+datiNazionali$nuovi_decessi = c(NA, diff(datiNazionali$deceduti))
+datiNazionali$nuovi_guariti = c(NA, diff(datiNazionali$dimessi_guariti))
+
+## setting fonts for plotly plots ####
+f1 <- list(family = "Arial, sans-serif",
+           size = 18,
+           color = "lightgrey" )
+f2 <- list( family = "Old Standard TT, serif",
+            size = 14,
+            color = "black" )
+
+
+## plotly graph national data ####
+## nuovi casi e variazione positivi
+## setting axis
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di tamponi effettuati quotidianamente', mirror = 'all', titlefont = f1) 
+
+plyNazTamponi = datiNazionali %>% 
+  plot_ly(x = ~data, y = ~nuovi_tamponi, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Tamponi quotidiani</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = 'Tamponi del giorno') %>% 
+  add_lines(x = ~data, y = ~filterWeek(datiNazionali$nuovi_tamponi), name = "Serie lisciata") %>% 
+  add_lines(x = ~data, y = ~nuovi_testati, hovertemplate = paste('<b>Individui testati</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = "Individui testati") %>% 
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95)) 
+plyNazTamponi
+```
+
+La linea della serie lisciata è semplicemente una media mobile all'indietro con coefficienti costanti del numero di tamponi o, molto più semplicemente la media dei precedenti sette valori compreso quello del giorno stesso. In questo modo si cerca di togliere la componente periodica connessa al giorno della settimana ed estrapolare l'andamento della serie.
+
+
+:::
+
+:::{}
+
+#### Nuovi positivi e testati
+```{r echo=FALSE}
+## nuovi positivi vs tamponi
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Nuovi casi positivi', mirror = 'all', titlefont = f1)
+
+polyEstimate = loess(data = datiNazionali, nuovi_positivi ~ nuovi_tamponi)
+newData = seq(0, max(datiNazionali$nuovi_tamponi), length.out = 200)
+previsione = predict(polyEstimate, data.frame(nuovi_tamponi = newData))
+
+markerPers = list(color = ~as.double(data),
+                  colorscale = 'Viridis',
+                  colorbar = list(
+                    title = 'Data',
+                    tickvals = round(quantile(as.double(datiNazionali$data), seq(0,.75, by = .25))),
+                    ticktext = datiNazionali$data[as.numeric(datiNazionali$data) %in% round(quantile(as.double(datiNazionali$data), seq(0,.75, by = .25)))],
+                    tickmode = 'array'
+                  )
+)
+
+
+plyTampCases = plot_ly(data = datiNazionali, x = ~newData, y = ~previsione, type = 'scatter', mode = 'lines', showlegend = FALSE, color = I('orange'), name = "Interpolata", hovertemplate = paste('<b>Positivi stimati</b>: %{y}', '<br><b>Tamponi stimati</b>: %{x}<br>')) %>%
+   add_trace(x = ~nuovi_tamponi, y = ~nuovi_positivi,  type = 'scatter', mode = 'markers', marker = markerPers,  hovertemplate = paste('<b>Num. positivi</b>: %{y}', '<br><b>Tamponi</b>: %{x}<br>'), name = '') %>% 
+  layout(xaxis = axis_x, yaxis = axis_y)
+plyTampCases
+```
+
+Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.
+
+:::
+
+:::{}
+
+#### Nuovi individui testati e positivi
+```{r echo=FALSE, warning=FALSE}
+## nuovi positivi vs tamponi
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Nuovi casi positivi', mirror = 'all', titlefont = f1)
+
+polyEstimate = loess(data = datiNazionali, nuovi_positivi ~ nuovi_testati)
+newData = seq(min(datiNazionali$nuovi_testati, na.rm = TRUE), max(datiNazionali$nuovi_testati, na.rm = TRUE), length.out = 200)
+previsione = predict(polyEstimate, data.frame(nuovi_testati = newData))
+
+markerPers = list(color = ~as.double(data),
+                  colorscale = 'Viridis',
+                  colorbar = list(
+                    title = 'Data',
+                    tickvals = round(quantile(as.double(datiNazionali$data), seq(0,.75, by = .25))),
+                    ticktext = datiNazionali$data[as.numeric(datiNazionali$data) %in% round(quantile(as.double(datiNazionali$data), seq(0,.75, by = .25)))],
+                    tickmode = 'array'
+                  )
+)
+
+
+plyTampCases = plot_ly(data = datiNazionali, x = ~newData, y = ~previsione, type = 'scatter', mode = 'lines', showlegend = FALSE, color = I('orange'), name = "Interpolata", hovertemplate = paste('<b>Positivi stimati</b>: %{y}', '<br><b>Testati stimati</b>: %{x}<br>')) %>%
+   add_trace(x = ~nuovi_testati, y = ~nuovi_positivi,  type = 'scatter', mode = 'markers', marker = markerPers,  hovertemplate = paste('<b>Num. testati</b>: %{y}', '<br><b>Tamponi</b>: %{x}<br>'), name = '') %>% 
+  layout(xaxis = axis_x, yaxis = axis_y)
+plyTampCases
+
+```
+
+Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.
+
+:::
+
+::: {}
+
+#### Positivi
+
+```{r echo=FALSE}
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1) 
+
+plyNazNuovi = datiNazionali %>% 
+  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi infetti</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi infetti') %>% 
+  add_lines(x = ~data, y = ~variazione_totale_positivi, hovertemplate = paste('<b>Saldo positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Saldo positivi") %>% 
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95)) 
+
+plyNazNuovi
+
+```
+:::
+
+:::{}
+
+#### Decomposizione positivi totali
+
+```{r echo=FALSE}
+# ## plot tamponi e positivi  ####
+plyDecPos = plot_ly(data = datiNazionali, x = ~data) %>%
+  add_bars(y = ~ricoverati_con_sintomi, name = "Ricoverati", hovertemplate = paste('<b>Ricoverati</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
+  add_bars(y = ~isolamento_domiciliare, name = 'Isolamento', hovertemplate = paste('<b>Isolamento</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
+    add_bars(y = ~terapia_intensiva, name = 'Intensiva', hovertemplate = paste('<b>Intensiva</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>% 
+  layout(yaxis = list(title = 'Numerosità'), barmode = 'stack', legend = list(x = .05, y = .95))
+
+plyDecPos
+```
+
+:::
+
+:::{}
+
+
+#### Decessi e guariti
+
+```{r echo=FALSE, warning=FALSE}
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numerosità', mirror = 'all', titlefont = f1) 
+
+plyNazDec = datiNazionali %>% 
+  plot_ly(x = ~data, y = ~nuovi_decessi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi decessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi decessi') %>% 
+  add_lines(x = ~data, y = ~nuovi_guariti, hovertemplate = paste('<b>Dimessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Dimessi") %>% 
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95)) 
+
+plyNazDec
+
+```
+
+
+
+
+
+
+
+:::
+
+::::
