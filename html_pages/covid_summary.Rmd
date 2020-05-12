@@ -49,6 +49,9 @@ filterWeek <- function(x){
 knitr::opts_chunk$set(fig.width=7)  
 # knitr::opts_chunk$set(fig.width=8, fig.height=5.1)  
 ```
+
+<a href="/blog/">Torna indietro</a>
+
 ## {.tabset}
 
 ### Nazionale 
