@@ -19,7 +19,7 @@ slug: covid_riassunto
 
 
 
-[Torna indietro](/blog/)
+<a href="/blog/">Torna indietro</a>
 
 ## {.tabset}
 
@@ -31,7 +31,7 @@ slug: covid_riassunto
 ::: {}
 #### Tamponi
 
-preserveb5d7eb30909c669c
+preserve67a9fe989ee920bc
 
 La linea della serie lisciata è semplicemente una media mobile all'indietro con coefficienti costanti del numero di tamponi o, molto più semplicemente la media dei precedenti sette valori compreso quello del giorno stesso. In questo modo si cerca di togliere la componente periodica connessa al giorno della settimana ed estrapolare l'andamento della serie.
 
@@ -41,7 +41,7 @@ La linea della serie lisciata è semplicemente una media mobile all'indietro con
 :::{}
 
 #### Nuovi positivi e testati
-preserve4ac757a0abc326ae
+preserve2bedc702c715b180
 
 Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.
 
@@ -50,7 +50,7 @@ Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto c
 :::{}
 
 #### Nuovi individui testati e positivi
-preserve7d65845561576ed1
+preservee727e23fcb598f1c
 
 Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.
 
@@ -60,7 +60,7 @@ Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto c
 
 #### Positivi
 
-preserve6d2671ff351d141e
+preservedd705fd3c914cc00
 
 I nuovi infetti sono il numero di casi che sono stati osservati in un giorno, mentre il saldo positivi ($saldo_i$) del giorno $i$ è dato da
 \[
@@ -73,7 +73,7 @@ saldo_{i} = positivi_{i-1} + nuoviCasi_{i} - guariti_{i} - decessi_{i}.
 
 #### Decomposizione positivi totali
 
-preserve24e55fde1a5c38fd
+preserve5da0125d60d16134
 
 :::
 
@@ -82,7 +82,7 @@ preserve24e55fde1a5c38fd
 
 #### Decessi e guariti
 
-preservec9f3d8e9d8c22348
+preserve8551c2f8d91d0266
 ::: 
 
 ::::
@@ -95,9 +95,9 @@ preservec9f3d8e9d8c22348
 
 
 ::: {}
-#### Totale casi
+#### Totale positivi
 
-preservecd2cb48c35018357
+preserve3726b165f2f86658
 
 
 
@@ -105,7 +105,7 @@ preservecd2cb48c35018357
 
 :::{}
 #### Numero casi giornaliero
-preserve1efabb9c2ef0f495
+preserve938a81a7a7a798ce
 
 
 :::
@@ -113,7 +113,7 @@ preserve1efabb9c2ef0f495
 :::{}
 
 #### Variazione positivi giornaliero
-preserve83bfb58ee37515b0
+preserve7135c4c9069ae663
 
 
 :::
@@ -122,7 +122,7 @@ preserve83bfb58ee37515b0
 
 #### Numero di casi rispetto alla popolazione
 
-preserve02d3f2768d3650ba
+preservee19b92bdecbb9281
 
 :::
 
@@ -130,7 +130,7 @@ preserve02d3f2768d3650ba
 
 #### Numero di positivi rispetto alla popolazione
 
-preserveff817835146f38e4
+preserve725e587cb7bfdf43
 
 :::
 
@@ -139,14 +139,14 @@ preserveff817835146f38e4
 
 #### Decessi rispetto al numero di casi
 
-preserve41eb979656a0ace0
+preserve023d02534703e13e
 
 :::
 
 :::{}
 #### Tamponi per regione
 
-preserveed9008e1ee681580
+preservec7699309c6e36701
 :::
 ::::
 
@@ -158,51 +158,51 @@ preserveed9008e1ee681580
 
 ::: {}
 #### Paesi maggiormente colpiti
-preserve03be3b9473402c05
+preserve50fa8484221af177
 :::
 
 ::: {}
 #### Paesi maggiormente colpiti (per abitante)
-preservec39cc5186004fab3
+preserved87db7b12239760e
 Numero di casi per 100 abitanti nei paesi con il maggior numero assoluto di ammalati.
 :::
 
 ::: {}
 #### Numero di casi per 1000 abitanti
-preserved10956aa0d1d686e
+preserveb8dd15dab92a8f10
 Numero di casi per 100 abitanti nei paesi con il maggior numero di ammalati ogni 1000 abitanti, in questo caso c'è una preponderanza di paesi piccoli.
 
 :::
 
 ::: {}
 #### Numero di nuovi casi giornaliero
-preserve9808a4bc4c33fc8d
+preserve8689132d9bf9ab27
 :::
 
 
 
 ::: {}
 #### Numero di decessi rispetto alla popolazione
-preservecb40a29fd5b1fe9f
+preservec7ed7cf1a1cfed21
 
 :::
 
 ::: {}
 
 #### Numero di decessi rispetto al numero di casi
-preserve6671bdf962a8885d
+preserve0ea6435ca6feef36
 :::
 
 :::{}
 #### Diffusione in Europa per numero di decessi
 
-preservee468521677998ce5
+preservee862c888aa48d9d7
 
 :::
 
 :::{}
 #### Diffusione in Europa per numero di casi
-preserve3f8a208228d810f5
+preserved09610fceb5a18a0
 :::
 
 

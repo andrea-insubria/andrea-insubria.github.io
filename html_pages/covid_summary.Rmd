@@ -250,7 +250,7 @@ demoRegions = demoRegions[, c(5, 1:4)]
 
 
 ::: {}
-#### Totale casi
+#### Totale positivi
 
 ```{r echo = FALSE}
 ## setting axis
@@ -258,7 +258,7 @@ axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'D
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Totale casi', mirror = 'all', titlefont = f1) 
 
 plyRegPosAss= datiRegioni %>% group_by(denominazione_regione) %>% 
-  plot_ly(x = ~data, y = ~totale_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Totale casi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
+  plot_ly(x = ~data, y = ~totale_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Totale positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
   layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
 plyRegPosAss
 
@@ -297,7 +297,7 @@ datiRegioniGrouped = datiRegioni %>% group_by(denominazione_regione)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Totale casi', mirror = 'all', titlefont = f1) 
 
 plyRegPosAss= datiRegioniGrouped %>% 
-  plot_ly(y = ~variazione_totale_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Variazione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
+  plot_ly(x = ~data, y = ~variazione_totale_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Variazione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
   layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
 plyRegPosAss
 
