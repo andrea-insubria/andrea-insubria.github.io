@@ -31,7 +31,7 @@ slug: covid_riassunto
 ::: {}
 #### Tamponi
 
-preserve67a9fe989ee920bc
+preserveb477f803f90cb647
 
 La linea della serie lisciata è semplicemente una media mobile all'indietro con coefficienti costanti del numero di tamponi o, molto più semplicemente la media dei precedenti sette valori compreso quello del giorno stesso. In questo modo si cerca di togliere la componente periodica connessa al giorno della settimana ed estrapolare l'andamento della serie.
 
@@ -41,7 +41,7 @@ La linea della serie lisciata è semplicemente una media mobile all'indietro con
 :::{}
 
 #### Nuovi positivi e testati
-preserve2bedc702c715b180
+preserveba8245b610e9af6c
 
 Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.
 
@@ -50,7 +50,7 @@ Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto c
 :::{}
 
 #### Nuovi individui testati e positivi
-preservee727e23fcb598f1c
+preserve280cb8ce37a463b9
 
 Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.
 
@@ -60,7 +60,7 @@ Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto c
 
 #### Positivi
 
-preservedd705fd3c914cc00
+preserve9bdf0f9366f6e01c
 
 I nuovi infetti sono il numero di casi che sono stati osservati in un giorno, mentre il saldo positivi ($saldo_i$) del giorno $i$ è dato da
 \[
@@ -73,7 +73,7 @@ saldo_{i} = positivi_{i-1} + nuoviCasi_{i} - guariti_{i} - decessi_{i}.
 
 #### Decomposizione positivi totali
 
-preserve5da0125d60d16134
+preserve83d0f227e8550dd6
 
 :::
 
@@ -82,7 +82,7 @@ preserve5da0125d60d16134
 
 #### Decessi e guariti
 
-preserve8551c2f8d91d0266
+preservea8461e75fa86be8a
 ::: 
 
 ::::
@@ -97,7 +97,7 @@ preserve8551c2f8d91d0266
 ::: {}
 #### Totale positivi
 
-preserve3726b165f2f86658
+preserve14198326b87889e1
 
 
 
@@ -105,7 +105,7 @@ preserve3726b165f2f86658
 
 :::{}
 #### Numero casi giornaliero
-preserve938a81a7a7a798ce
+preserve0efdc562b3ca3e51
 
 
 :::
@@ -113,7 +113,7 @@ preserve938a81a7a7a798ce
 :::{}
 
 #### Variazione positivi giornaliero
-preserve7135c4c9069ae663
+preserve28a1e0f9fe37e120
 
 
 :::
@@ -122,7 +122,7 @@ preserve7135c4c9069ae663
 
 #### Numero di casi rispetto alla popolazione
 
-preservee19b92bdecbb9281
+preserve64730ebc9f3f5fa1
 
 :::
 
@@ -130,7 +130,7 @@ preservee19b92bdecbb9281
 
 #### Numero di positivi rispetto alla popolazione
 
-preserve725e587cb7bfdf43
+preserve4b0312686e04f3cb
 
 :::
 
@@ -139,14 +139,14 @@ preserve725e587cb7bfdf43
 
 #### Decessi rispetto al numero di casi
 
-preserve023d02534703e13e
+preserve7807c7852834e564
 
 :::
 
 :::{}
 #### Tamponi per regione
 
-preservec7699309c6e36701
+preserveeab9a563e32268cc
 :::
 ::::
 
@@ -158,51 +158,51 @@ preservec7699309c6e36701
 
 ::: {}
 #### Paesi maggiormente colpiti
-preserve50fa8484221af177
+preserve410503c7d43da8c3
 :::
 
 ::: {}
 #### Paesi maggiormente colpiti (per abitante)
-preserved87db7b12239760e
+preserve8e569a98bb75ca56
 Numero di casi per 100 abitanti nei paesi con il maggior numero assoluto di ammalati.
 :::
 
 ::: {}
 #### Numero di casi per 1000 abitanti
-preserveb8dd15dab92a8f10
+preserve2ad4ef141ae91713
 Numero di casi per 100 abitanti nei paesi con il maggior numero di ammalati ogni 1000 abitanti, in questo caso c'è una preponderanza di paesi piccoli.
 
 :::
 
 ::: {}
 #### Numero di nuovi casi giornaliero
-preserve8689132d9bf9ab27
+preservec02c2019d784c48c
 :::
 
 
 
 ::: {}
 #### Numero di decessi rispetto alla popolazione
-preservec7ed7cf1a1cfed21
+preservef8d1dc83fc77b2b1
 
 :::
 
 ::: {}
 
 #### Numero di decessi rispetto al numero di casi
-preserve0ea6435ca6feef36
+preserveaaf281b704e71554
 :::
 
 :::{}
 #### Diffusione in Europa per numero di decessi
 
-preservee862c888aa48d9d7
+preserve23783b9f5926ce05
 
 :::
 
 :::{}
 #### Diffusione in Europa per numero di casi
-preserved09610fceb5a18a0
+preserve689b72120740e92c
 :::
 
 
