@@ -85,7 +85,7 @@ axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'N
 
 plyNazTamponi = datiNazionali %>% 
   plot_ly(x = ~data, y = ~nuovi_tamponi, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Tamponi quotidiani</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = 'Tamponi del giorno') %>% 
-  add_lines(x = ~data, y = ~filterWeek(datiNazionali$nuovi_tamponi), name = "Serie lisciata") %>% 
+  add_lines(x = ~data, y = ~filterWeek(datiNazionali$nuovi_tamponi), name = "Serie lisciata", color = I("dodgerblue2") , line = list(dash = 'dash', width = 3.0)) %>% 
   add_lines(x = ~data, y = ~nuovi_testati, hovertemplate = paste('<b>Individui testati</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = "Individui testati") %>% 
   layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95)) 
 plyNazTamponi
@@ -139,8 +139,9 @@ Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto c
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Nuovi casi positivi', mirror = 'all', titlefont = f1)
 
-polyEstimate = loess(data = datiNazionali, nuovi_positivi ~ nuovi_testati)
-newData = seq(min(datiNazionali$nuovi_testati, na.rm = TRUE), max(datiNazionali$nuovi_testati, na.rm = TRUE), length.out = 200)
+temp = datiNazionali[-which.max(datiNazionali$nuovi_testati),]
+polyEstimate = loess(data = temp, nuovi_positivi ~ nuovi_testati)
+newData = seq(min(temp$nuovi_testati, na.rm = TRUE), max(temp$nuovi_testati, na.rm = TRUE), length.out = 200)
 previsione = predict(polyEstimate, data.frame(nuovi_testati = newData))
 
 markerPers = list(color = ~as.double(data),
@@ -154,9 +155,9 @@ markerPers = list(color = ~as.double(data),
 )
 
 
-etichette = paste0('<b>Giorno: </b>', datiNazionali$data, '<br><b>Num. testati</b>: ', datiNazionali$nuovi_testati, '<br><b>Positivi</b>: ', datiNazionali$nuovi_positivi)
+etichette = paste0('<b>Giorno: </b>', temp$data, '<br><b>Num. testati</b>: ', temp$nuovi_testati, '<br><b>Positivi</b>: ', temp$nuovi_positivi)
 
-plyTampCases = plot_ly(data = datiNazionali, x = ~newData, y = ~previsione, type = 'scatter', mode = 'lines', showlegend = FALSE, color = I('orange'), name = "Interpolata", hovertemplate = paste('<b>Positivi stimati</b>: %{y}', '<br><b>Testati stimati</b>: %{x}<br>')) %>%
+plyTampCases = plot_ly(data = temp, x = ~newData, y = ~previsione, type = 'scatter', mode = 'lines', showlegend = FALSE, color = I('orange'), name = "Interpolata", hovertemplate = paste('<b>Positivi stimati</b>: %{y}', '<br><b>Testati stimati</b>: %{x}<br>')) %>%
    add_trace(x = ~nuovi_testati, y = ~nuovi_positivi,  type = 'scatter', mode = 'markers', color = I('lightblue'), text = etichette, hovertemplate = '%{text}', name = '') %>% 
   layout(xaxis = axis_x, yaxis = axis_y)
 plyTampCases
@@ -347,6 +348,23 @@ plyRegCasi
 :::{}
 
 
+#### Decessi
+
+```{r echo = FALSE, warning=FALSE}
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi totale', mirror = 'all', titlefont = f1) 
+
+plyRegDecessi = datiRegioni %>% 
+  group_by(denominazione_regione) %>% 
+  plot_ly(x = ~data, y = ~deceduti, colors = ~denominazione_regione, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Proporzione decessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
+plyRegDecessi
+```
+
+:::
+
+:::{}
+
+
 #### Decessi rispetto al numero di casi
 
 ```{r echo = FALSE, warning=FALSE}
@@ -361,6 +379,8 @@ plyRegDecessi
 ```
 
 :::
+
+
 
 :::{}
 #### Tamponi per regione
