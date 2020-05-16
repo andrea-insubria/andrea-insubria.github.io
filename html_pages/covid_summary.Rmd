@@ -512,7 +512,7 @@ axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'D
 :::: {style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; grid-auto-flow: row"}
 
 ::: {}
-#### Paesi maggiormente colpiti
+#### Paesi maggiormente colpiti (Casi totali)
 ```{r echo=FALSE, warning=FALSE}
 data = data %>%  mutate(cumCasesRate = cumCases / popData2018 * 1000)
 
@@ -531,10 +531,12 @@ plyCases = temp %>%
 
 plyCases
 ```
+In questo grafico è rappresentato l'andamento del numero totale di casi per 15 paesi che hanno avuto il maggior numero di casi in termini assoluti.
 :::
 
+
 ::: {}
-#### Paesi maggiormente colpiti (per abitante)
+#### Paesi maggiormente colpiti (Casi per abitante)
 ```{r echo=FALSE, warning=FALSE}
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi per 1000 abitanti', mirror = 'all', titlefont = f1) 
 
@@ -546,11 +548,11 @@ plyCasesRate = temp %>%
 
 plyCasesRate
 ```
-Numero di casi per 100 abitanti nei paesi con il maggior numero assoluto di ammalati.
+Numero di casi per 1000 abitanti nei paesi con il maggior numero assoluto di ammalati.
 :::
 
 ::: {}
-#### Numero di casi per 1000 abitanti
+#### Paesi maggiormente colpiti sulla base del numero di casi per 1000 abitanti
 ```{r echo=FALSE, warning=FALSE}
 tempProp = aggregate(data$cumCasesRate, by = list(country = data$countriesAndTerritories), max)
 tempProp = head(tempProp$country[order(tempProp$x, decreasing = TRUE)], 15)
@@ -560,14 +562,14 @@ tempProp = data[data$countriesAndTerritories %in% tempProp,]
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, mirror = 'all', titlefont = f1) 
 
 
-plyCasesRate = temp %>% 
+plyCasesRate = tempProp %>% 
   filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>% 
   plot_ly(x = ~dateRep, y = ~cumCasesRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>% 
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Proporzione di casi rispetto alla popolazione', legend = list(x = .05, y = .95))
 
 plyCasesRate
 ```
-Numero di casi per 100 abitanti nei paesi con il maggior numero di ammalati ogni 1000 abitanti, in questo caso c'è una preponderanza di paesi piccoli.
+Numero di casi per 1000 abitanti nei paesi con il maggior numero di ammalati ogni 1000 abitanti, in questo caso c'è una preponderanza di paesi piccoli.
 
 :::
 
