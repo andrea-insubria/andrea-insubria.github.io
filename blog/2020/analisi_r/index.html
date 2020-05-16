@@ -358,8 +358,8 @@ plotVars(vars)</code></pre>
 <li><code>denominaazione_regione</code>: nome esteso della regione</li>
 </ul>
 <pre class="r"><code>levels(datiRegioni$codice_regione)</code></pre>
-<pre><code>##  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;13&quot; &quot;14&quot; &quot;15&quot;
-## [16] &quot;16&quot; &quot;17&quot; &quot;18&quot; &quot;19&quot; &quot;20&quot;</code></pre>
+<pre><code>##  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;13&quot; &quot;14&quot; &quot;15&quot; &quot;16&quot;
+## [16] &quot;17&quot; &quot;18&quot; &quot;19&quot; &quot;20&quot; &quot;21&quot; &quot;22&quot;</code></pre>
 <pre class="r"><code>levels(datiRegioni$denominazione_regione)</code></pre>
 <pre><code>##  [1] &quot;Abruzzo&quot;               &quot;Basilicata&quot;            &quot;Calabria&quot;             
 ##  [4] &quot;Campania&quot;              &quot;Emilia-Romagna&quot;        &quot;Friuli Venezia Giulia&quot;
@@ -376,10 +376,8 @@ temp = aggregate(temp[,-1], by = list(temp$data), sum)
 
 levels(datiRegioni$denominazione_regione)[13] = &#39;Trentino - Alto Adige&#39;
 datiRegioni = datiRegioni[datiRegioni$denominazione_regione != &quot;P.A. Bolzano&quot;,]
-datiRegioni[datiRegioni$codice_regione == 4, 7:17] = temp[,-1]</code></pre>
-<pre><code>## Warning in `[&lt;-.data.frame`(`*tmp*`, datiRegioni$codice_regione == 4, 7:17, :
-## provided 12 variables to replace 11 variables</code></pre>
-<pre class="r"><code>datiRegioni$denominazione_regione = factor(datiRegioni$denominazione_regione)
+datiRegioni[datiRegioni$codice_regione == 4, 7:17] = temp[,-1]
+datiRegioni$denominazione_regione = factor(datiRegioni$denominazione_regione)
 rm(temp)
 
 levels(datiRegioni$denominazione_regione)</code></pre>
