@@ -383,15 +383,15 @@ plyRegDecessi
 
 
 :::{}
-#### Tamponi per regione
+#### Casi testati per regione
 
 ```{r echo= FALSE, warning=FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di test  ogni 1000 ab.', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Individui testati ogni 1000 ab.', mirror = 'all', titlefont = f1) 
 
 plyRegTamp= datiRegioni %>% mutate(tasso = casi_testati / popolazione * 1000) %>% 
   group_by(denominazione_regione) %>% 
   plot_ly(x = ~data, y = ~tasso, colors = ~denominazione_regione, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Ind. testati</b>: %{y:.0f}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
+  layout(xaxis = axis_x, yaxis = axis_y) 
 plyRegTamp
 ```
 :::
