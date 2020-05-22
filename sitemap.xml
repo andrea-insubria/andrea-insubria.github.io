@@ -1,133 +1,127 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/</loc>
-    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/blog/</loc>
-    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/tags/covid/</loc>
-    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/tags/</loc>
-    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/blog/2020/covid_generale/</loc>
-    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/post/</loc>
-    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/post/newpost/</loc>
-    <lastmod>2020-05-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/tags/didattica/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/blog/2020/analisi_r/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/tags/r-intro/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/blog/2020/sird/</loc>
-    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/blog/2020/covid_eur/</loc>
-    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/blog/2020/covid_reg/</loc>
-    <lastmod>2020-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/blog/2020/covid_naz/</loc>
-    <lastmod>2020-04-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/categories/</loc>
-    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/tags/distribution-theory/</loc>
-    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/tags/multivariate-distributions/</loc>
-    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/categories/probability/</loc>
-    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/blog/2020/symmetric-distributions/</loc>
-    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/tags/uniform-distribution/</loc>
-    <lastmod>2020-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/contact/</loc>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/categories/didattica/</loc>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/didattica/</loc>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/pagine_didattica/</loc>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/ricerca/</loc>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/risorse/</loc>
-  </url>
-  
-  <url>
-    <loc>https://andrea-insubria.github.io/pagine_didattica/statistica_a_2015_2016/</loc>
-  </url>
-  
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://andrea-insubria.github.io/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/ricerca/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/didattica/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/blog/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/risorse/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/contact/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/blog/2020/covid_generale/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/blog/2020/analisi_r/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/blog/2020/sird/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/blog/2020/covid_eur/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/pagine_didattica/statistica_a_2015_2016/index.html</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/blog/2020/covid_reg/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/blog/2020/covid_naz/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/blog/2020/symmetric-distributions/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/categories/didattica/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/categories/probability/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/tags/covid/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/tags/didattica/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/tags/distribution-theory/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/tags/multivariate-distributions/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/tags/r-intro/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/tags/uniform-distribution/</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://andrea-insubria.github.io/html_pages/covid_summary.html</loc>
+  <lastmod>2020-05-22T10:24:54+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
 </urlset>
