@@ -27,7 +27,7 @@ prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dat
 temp = tail(sort(dir(paste(prefixDir,'/data/', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
 oggi = gsub('_', '-', substr(temp, nchar(temp)-15, nchar(temp)-6))
 
-if ((as.Date(oggi)<Sys.Date()) & (as.numeric(format(Sys.time(), '%H')) > 16) ){
+if (as.Date(oggi)<Sys.Date() ){
 source(paste0(prefixDir,'/importazione_dati.R'))
 temp = tail(sort(dir(paste(prefixDir,'/data/', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
 }
