@@ -368,10 +368,10 @@ plyRegDecessi
 #### Decessi rispetto al numero di casi
 
 ```{r echo = FALSE, warning=FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi ogni 10000 casi', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi ogni 100 casi', mirror = 'all', titlefont = f1) 
 
 plyRegDecessi = datiRegioni %>% 
-  mutate(decessiRelativi = deceduti / totale_casi * 10000) %>% 
+  mutate(decessiRelativi = deceduti / totale_casi * 100) %>% 
   group_by(denominazione_regione) %>% 
   plot_ly(x = ~data, y = ~decessiRelativi, colors = ~denominazione_regione, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Proporzione decessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
   layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
