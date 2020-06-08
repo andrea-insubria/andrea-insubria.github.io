@@ -101,7 +101,7 @@ La linea della serie lisciata è semplicemente una media mobile all'indietro con
 #### Nuovi positivi e testati
 ```{r echo=FALSE}
 ## nuovi positivi vs tamponi
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi a soggetti distinti', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Nuovi casi positivi', mirror = 'all', titlefont = f1)
 
 polyEstimate = loess(data = datiNazionali, nuovi_positivi ~ nuovi_tamponi)
@@ -127,7 +127,8 @@ plyTampCases = plot_ly(data = datiNazionali, x = ~newData, y = ~previsione, type
 plyTampCases
 ```
 
-Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.
+Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.  
+Per capire come l'andamento di questa serie sia anche connesso al periodo in cui sono stati effettuati i tamponi si rimanda all'analogo grafico che si trova in questa [pagina](/blog/2020/covid_naz/index.html#tamponi) in cui con i colori sono mostrate anche le date.
 
 :::
 
