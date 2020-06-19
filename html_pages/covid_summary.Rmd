@@ -515,7 +515,7 @@ axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'D
 ::: {}
 #### Paesi maggiormente colpiti (Casi totali)
 ```{r echo=FALSE, warning=FALSE}
-data = data %>%  mutate(cumCasesRate = cumCases / popData2018 * 1000)
+data = data %>%  mutate(cumCasesRate = cumCases / popData2019 * 1000)
 
 temp = aggregate(data$cumCases, by = list(country = data$countriesAndTerritories), max)
 temp = head(temp$country[order(temp$x, decreasing = TRUE)], 15)
@@ -597,8 +597,8 @@ plyCases
 ## proporzione di nuovi decessi rispetto alla popolazione ####
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di nuovi decessi per 100000 abitanti', mirror = 'all', titlefont = f1) 
 
-plyNewDeathsRate = temp %>%  mutate(newDeathsRate = deaths / popData2018 * 100000) %>% 
-  filter(dateRep >= "2020-02-20", popData2018 >= 1.e7) %>% group_by(geoId) %>% 
+plyNewDeathsRate = temp %>%  mutate(newDeathsRate = deaths / popData2019 * 100000) %>% 
+  filter(dateRep >= "2020-02-20", popData2019 >= 1.e7) %>% group_by(geoId) %>% 
   plot_ly(x = ~dateRep, y = ~newDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>% 
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di decessi quotidiani per 100000 abitanti', legend = list(x = .05, y = .95))
 
@@ -615,7 +615,7 @@ plyNewDeathsRate
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi su numero di casi', mirror = 'all', titlefont = f1) 
 
 plyDeathsCasesRate = temp %>%  mutate(cumDeathsRate = cumDeaths / cumCases * 100) %>% 
-  filter(dateRep >= "2020-03-02", popData2018 >= 1.e7) %>% group_by(geoId) %>% 
+  filter(dateRep >= "2020-03-02", popData2019 >= 1.e7) %>% group_by(geoId) %>% 
   plot_ly(x = ~dateRep, y = ~cumDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>% 
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di decessi ogni 100 casi', legend = list(x = .05, y = .95))
 
@@ -634,7 +634,7 @@ dataEuropeShp = dataEuropeShp[, c(1, 2, 6, 7, 10, 11, 12, 13, 16, 20, 27, 28)]
 
 ## add rate of cases 
 dataEuropeShp = dataEuropeShp %>% 
-  mutate(cumCasesRate = cumCases/popData2018*1.e4, newCasesRate = cases /popData2018 * 1.e4, cumDeathsRate = cumDeaths/popData2018 *1.e5, newDeathsRate = deaths /popData2018 * 1.e5)
+  mutate(cumCasesRate = cumCases/popData2019*1.e4, newCasesRate = cases /popData2019 * 1.e4, cumDeathsRate = cumDeaths/popData2019 *1.e5, newDeathsRate = deaths /popData2019 * 1.e5)
 
 dataEuropeShp = dataEuropeShp %>% filter(CNTRY_NAME != 'San Marino')
 
