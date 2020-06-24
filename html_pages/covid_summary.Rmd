@@ -1,7 +1,7 @@
 ---
 banner: img/banners/covid.png
 title: "Riassunto dei dati sul covid-19"
-date: '2020-05-12'
+date: "`r format(Sys.time(), '%d-%m-%Y')`"
 output: html_document
 tags:
 - covid
