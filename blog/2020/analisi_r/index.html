@@ -264,22 +264,24 @@ In alto a destra nei riquadri con il codice c’è un’icona, cliccando sull’
 <pre class="r"><code>datiNazionali = read.csv(&#39;https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv&#39;)
 
 sapply(datiNazionali, class)</code></pre>
-<pre><code>##                       data                      stato 
-##                   &quot;factor&quot;                   &quot;factor&quot; 
-##     ricoverati_con_sintomi          terapia_intensiva 
-##                  &quot;integer&quot;                  &quot;integer&quot; 
-##       totale_ospedalizzati     isolamento_domiciliare 
-##                  &quot;integer&quot;                  &quot;integer&quot; 
-##            totale_positivi variazione_totale_positivi 
-##                  &quot;integer&quot;                  &quot;integer&quot; 
-##             nuovi_positivi            dimessi_guariti 
-##                  &quot;integer&quot;                  &quot;integer&quot; 
-##                   deceduti                totale_casi 
-##                  &quot;integer&quot;                  &quot;integer&quot; 
-##                    tamponi               casi_testati 
-##                  &quot;integer&quot;                  &quot;integer&quot; 
-##                    note_it                    note_en 
-##                   &quot;factor&quot;                   &quot;factor&quot;</code></pre>
+<pre><code>##                         data                        stato 
+##                     &quot;factor&quot;                     &quot;factor&quot; 
+##       ricoverati_con_sintomi            terapia_intensiva 
+##                    &quot;integer&quot;                    &quot;integer&quot; 
+##         totale_ospedalizzati       isolamento_domiciliare 
+##                    &quot;integer&quot;                    &quot;integer&quot; 
+##              totale_positivi   variazione_totale_positivi 
+##                    &quot;integer&quot;                    &quot;integer&quot; 
+##               nuovi_positivi              dimessi_guariti 
+##                    &quot;integer&quot;                    &quot;integer&quot; 
+##                     deceduti casi_da_sospetto_diagnostico 
+##                    &quot;integer&quot;                    &quot;integer&quot; 
+##            casi_da_screening                  totale_casi 
+##                    &quot;integer&quot;                    &quot;integer&quot; 
+##                      tamponi                 casi_testati 
+##                    &quot;integer&quot;                    &quot;integer&quot; 
+##                         note 
+##                     &quot;factor&quot;</code></pre>
 <p>Con la seconda istruzione esaminiamo le classe delle variabili che compongono il dataframe importato, lo stesso risultato si sarebbe potuto ottenere con <code>str(datiNazionali)</code>, ma con una visualizzazione diversa del risultato.</p>
 <!-- # ```{r} -->
 <!-- DT::datatable(datiNazionali, rownames = FALSE, options = list( -->
