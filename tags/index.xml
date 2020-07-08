@@ -2,66 +2,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Andrea Martinelli website</title>
-    <link>https://andrea-insubria.github.io/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on Andrea Martinelli website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>it</language>
-    <lastBuildDate>Sun, 10 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jul 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://andrea-insubria.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>covid</title>
-      <link>https://andrea-insubria.github.io/tags/covid/</link>
-      <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
+      <link>/tags/covid/</link>
+      <pubDate>Wed, 08 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/tags/covid/</guid>
+      <guid>/tags/covid/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Didattica</title>
-      <link>https://andrea-insubria.github.io/tags/didattica/</link>
+      <link>/tags/didattica/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/tags/didattica/</guid>
+      <guid>/tags/didattica/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R intro</title>
-      <link>https://andrea-insubria.github.io/tags/r-intro/</link>
+      <link>/tags/r-intro/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/tags/r-intro/</guid>
+      <guid>/tags/r-intro/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Distribution theory</title>
-      <link>https://andrea-insubria.github.io/tags/distribution-theory/</link>
+      <link>/tags/distribution-theory/</link>
       <pubDate>Sat, 04 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/tags/distribution-theory/</guid>
+      <guid>/tags/distribution-theory/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Multivariate distributions</title>
-      <link>https://andrea-insubria.github.io/tags/multivariate-distributions/</link>
+      <link>/tags/multivariate-distributions/</link>
       <pubDate>Sat, 04 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/tags/multivariate-distributions/</guid>
+      <guid>/tags/multivariate-distributions/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Uniform distribution</title>
-      <link>https://andrea-insubria.github.io/tags/uniform-distribution/</link>
+      <link>/tags/uniform-distribution/</link>
       <pubDate>Sat, 04 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/tags/uniform-distribution/</guid>
+      <guid>/tags/uniform-distribution/</guid>
       <description></description>
     </item>
     
