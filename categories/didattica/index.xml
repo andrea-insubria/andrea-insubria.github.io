@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Didattica on Andrea Martinelli website</title>
-    <link>https://andrea-insubria.github.io/categories/didattica/</link>
+    <link>/categories/didattica/</link>
     <description>Recent content in Didattica on Andrea Martinelli website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>it</language>
     
-	<atom:link href="https://andrea-insubria.github.io/categories/didattica/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/didattica/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Didattica</title>
-      <link>https://andrea-insubria.github.io/didattica/</link>
+      <link>/didattica/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/didattica/</guid>
+      <guid>/didattica/</guid>
       <description>Modalità di esame straordinarie per emergenza COVID
 Come dovreste sapere per via dell’emergenza il Rettore ha ritenuto opportuno mantenere le modalità di esame online sino a settembre 2020. L’Ateneo ha specificato le linee guida per lo svolgimento di tali esami online.
 In questa pagina potete trovare un estratto delle linee guida per quanto riguarda le modalità di esame del corso di statistica.
@@ -24,10 +24,10 @@ In questa pagina potete trovare un estratto delle linee guida per quanto riguard
     
     <item>
       <title>Modalità di esame COVID-19</title>
-      <link>https://andrea-insubria.github.io/pagine_didattica/modalita_esame_covid/</link>
+      <link>/pagine_didattica/modalita_esame_covid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/pagine_didattica/modalita_esame_covid/</guid>
+      <guid>/pagine_didattica/modalita_esame_covid/</guid>
       <description>Di seguito riporto un estratto da “Linee guida per lo svolgimento di esami a distanza”, l’estratto comprende solo la parte riguardante l’esame di Statistica. La versione integrale del documento si può scaricare da questa pagina.
 Nelle parti riportate delle linee guida sono sottolineati/enfatizzati alcune regole che sono particolarmente importanti.
 1. Indicazioni generali
@@ -37,10 +37,10 @@ Nelle parti riportate delle linee guida sono sottolineati/enfatizzati alcune reg
     
     <item>
       <title>Statistica A</title>
-      <link>https://andrea-insubria.github.io/pagine_didattica/statistica_a_2015_2016/</link>
+      <link>/pagine_didattica/statistica_a_2015_2016/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/pagine_didattica/statistica_a_2015_2016/</guid>
+      <guid>/pagine_didattica/statistica_a_2015_2016/</guid>
       <description>Programma
 Modalità di esame
 Orari lezioni
@@ -50,10 +50,10 @@ Orari lezioni
     
     <item>
       <title>Statistica A</title>
-      <link>https://andrea-insubria.github.io/pagine_didattica/statistica_b_2020_2021/</link>
+      <link>/pagine_didattica/statistica_b_2020_2021/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://andrea-insubria.github.io/pagine_didattica/statistica_b_2020_2021/</guid>
+      <guid>/pagine_didattica/statistica_b_2020_2021/</guid>
       <description>Programma
 Bibliografia
 Modalità di esame

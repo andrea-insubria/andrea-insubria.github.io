@@ -132,6 +132,8 @@ Per capire come l'andamento di questa serie sia anche connesso al periodo in cui
 
 :::
 
+
+
 :::{}
 
 #### Nuovi individui testati e positivi
@@ -191,6 +193,58 @@ saldo_{i} = positivi_{i-1} + nuoviCasi_{i} - guariti_{i} - decessi_{i}.
 \]
 
 :::
+
+:::{}
+#### Nuovi casi rispetto a individui testati
+```{r echo = FALSE, warning = FALSE}
+
+variazioniGiornaliere = datiNazionali %>% transmute(data, nuovi_casi = nuovi_positivi, casi_diagnostici = c(NA, diff(casi_da_sospetto_diagnostico)), casi_screening = c(NA, diff(casi_da_screening)), nuovi_casi_testati = c(NA, diff(casi_testati)), proporzione_diagnostici = casi_diagnostici / nuovi_casi * 100)
+
+## grafico del rapporto tra nuovi casi e numero di individui testati 
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = '% casi rispetto individui testati', mirror = 'all', titlefont = f1)
+
+plyTestatiCasi = variazioniGiornaliere %>% filter(variazioniGiornaliere$data >= "2020-04-21") %>% plot_ly(x = ~data, y = ~nuovi_casi / nuovi_casi_testati*100, type = 'scatter', mode = 'lines', showlegend = FALSE, name = '', hovertemplate = paste('<b>Prop. positivi su testati</b>: %{y}', '<br><b>Data: </b>: %{x}<br>'), line = list(width = 3)) %>%
+  layout(xaxis = axis_x, yaxis = axis_y)
+plyTestatiCasi
+
+```
+
+Nel grafico è rappresentato la serie storica giornaliera della percentuale di nuovi casi rispetto al numero di individui testati, si noti che il denominatore sono i nuovi individui testati e non i tamponi.
+:::
+
+:::{}
+#### Nuovi casi da attività clinica vs screening
+```{r echo = FALSE, warning= FALSE}
+## grafico con la decomposizione dei nuovi casi giornalieri in tamponi positivi da attività clinica (diagnostici) o da attività di screening 
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Percentuale', mirror = 'all')
+
+# plyDecCasi = variazioniGiornaliere %>% filter(variazioniGiornaliere$data >= "2020-07-23") %>% 
+#   plot_ly(x = ~data) %>%
+#   add_bars(y = ~casi_screening, name = "Screening", hovertemplate = paste('<b>Casi da screening</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
+#   add_bars(y = ~casi_diagnostici, name = 'Diagnostici', hovertemplate = paste('<b>Casi diagnosi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
+#   layout(title = 'Decomposizione positivi totali', yaxis = axis_y, xaxis = axis_x, barmode = 'stack')
+# plyDecCasi
+
+plyDecCasiPerc = variazioniGiornaliere %>% filter(variazioniGiornaliere$data >= "2020-07-23") %>% 
+  plot_ly(x = ~data) %>%
+  add_bars(y = ~(100 - proporzione_diagnostici), name = "Screening", hovertemplate = paste('<b>Prop. screening</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
+  add_bars(y = ~proporzione_diagnostici, name = 'Diagnostici', hovertemplate = paste('<b>Prop. diagnosi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
+  layout(yaxis = axis_y, xaxis = axis_x, barmode = 'stack')
+plyDecCasiPerc
+
+
+```
+
+Nel grafico è rappresentata la decomposizione percentuale dei nuovi casi giornalieri tra positivi da attività clinica (diagnostici) e da attività di screening. Questi dati sono stati messi a disposizione a partire dal 23 luglio 2020.
+:::
+
+
+
+
+
+
 
 :::{}
 
