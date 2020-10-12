@@ -176,12 +176,13 @@ Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto c
 #### Positivi
 
 ```{r echo=FALSE}
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = '', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1) 
 
 plyNazNuovi = datiNazionali %>% 
   plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi infetti</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi infetti') %>% 
   add_lines(x = ~data, y = ~variazione_totale_positivi, hovertemplate = paste('<b>Saldo positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Saldo positivi") %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95)) 
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(orientation = 'h')) 
 
 plyNazNuovi
 
@@ -217,8 +218,8 @@ Nel grafico è rappresentato la serie storica giornaliera della percentuale di n
 #### Nuovi casi da attività clinica vs screening
 ```{r echo = FALSE, warning= FALSE}
 ## grafico con la decomposizione dei nuovi casi giornalieri in tamponi positivi da attività clinica (diagnostici) o da attività di screening 
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45)
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Percentuale', mirror = 'all')
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = '', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Percentuale', mirror = 'all', titlefont = f1)
 
 # plyDecCasi = variazioniGiornaliere %>% filter(variazioniGiornaliere$data >= "2020-07-23") %>% 
 #   plot_ly(x = ~data) %>%
@@ -231,7 +232,7 @@ plyDecCasiPerc = variazioniGiornaliere %>% filter(variazioniGiornaliere$data >= 
   plot_ly(x = ~data) %>%
   add_bars(y = ~(100 - proporzione_diagnostici), name = "Screening", hovertemplate = paste('<b>Prop. screening</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
   add_bars(y = ~proporzione_diagnostici, name = 'Diagnostici', hovertemplate = paste('<b>Prop. diagnosi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
-  layout(yaxis = axis_y, xaxis = axis_x, barmode = 'stack')
+  layout(yaxis = axis_y, xaxis = axis_x,  barmode = 'stack', legend = list(orientation = 'h'))
 plyDecCasiPerc
 
 
@@ -240,23 +241,20 @@ plyDecCasiPerc
 Nel grafico è rappresentata la decomposizione percentuale dei nuovi casi giornalieri tra positivi da attività clinica (diagnostici) e da attività di screening. Questi dati sono stati messi a disposizione a partire dal 23 luglio 2020.
 :::
 
-
-
-
-
-
-
 :::{}
 
-#### Decomposizione positivi totali
+#### Decomposizione positivi totali tra ospedalizzati, intensivi e isolati
 
 ```{r echo=FALSE}
 # ## plot tamponi e positivi  ####
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numerosità', mirror = 'all', titlefont = f1)
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = '', mirror = 'all', tickangle = 45, titlefont = f1)
+
 plyDecPos = plot_ly(data = datiNazionali, x = ~data) %>%
   add_bars(y = ~ricoverati_con_sintomi, name = "Ricoverati", hovertemplate = paste('<b>Ricoverati</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
   add_bars(y = ~isolamento_domiciliare, name = 'Isolamento', hovertemplate = paste('<b>Isolamento</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
     add_bars(y = ~terapia_intensiva, name = 'Intensiva', hovertemplate = paste('<b>Intensiva</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>% 
-  layout(yaxis = list(title = 'Numerosità'), barmode = 'stack', legend = list(x = .05, y = .95))
+  layout(xaxis = axis_x,  yaxis = axis_y, barmode = 'stack', legend = list(orientation = 'h'))
 
 plyDecPos
 ```
@@ -269,6 +267,7 @@ plyDecPos
 #### Decessi e guariti
 
 ```{r echo=FALSE, warning=FALSE}
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numerosità', mirror = 'all', titlefont = f1) 
 
 plyNazDec = datiNazionali %>% 
