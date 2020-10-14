@@ -98,10 +98,10 @@ La linea della serie lisciata è semplicemente una media mobile all'indietro con
 
 :::{}
 
-#### Nuovi positivi e testati
+#### Nuovi casi rispetto al numero di tamponi
 ```{r echo=FALSE}
 ## nuovi positivi vs tamponi
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi a soggetti distinti', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Nuovi casi positivi', mirror = 'all', titlefont = f1)
 
 polyEstimate = loess(data = datiNazionali, nuovi_positivi ~ nuovi_tamponi)
@@ -136,11 +136,11 @@ Per capire come l'andamento di questa serie sia anche connesso al periodo in cui
 
 :::{}
 
-#### Nuovi individui testati e positivi
+#### Nuovi casi rispetto a tamponi (solo su soggetti non testati) 
 ```{r echo=FALSE, warning=FALSE}
 ## nuovi positivi vs tamponi
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Nuovi casi positivi', mirror = 'all', titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Tamponi a soggetti distinti', mirror = 'all', titlefont = f1)
 
 temp = datiNazionali[-which.max(datiNazionali$nuovi_testati),]
 polyEstimate = loess(data = temp, nuovi_positivi ~ nuovi_testati)
