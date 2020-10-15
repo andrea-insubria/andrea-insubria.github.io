@@ -139,10 +139,13 @@ Per capire come l'andamento di questa serie sia anche connesso al periodo in cui
 #### Nuovi casi rispetto a tamponi (solo su soggetti non testati) 
 ```{r echo=FALSE, warning=FALSE}
 ## nuovi positivi vs tamponi
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Tamponi a soggetti distinti', mirror = 'all', titlefont = f1)
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi a soggetti distinti', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Positivi', mirror = 'all', titlefont = f1)
 
-temp = datiNazionali[-which.max(datiNazionali$nuovi_testati),]
+# temp = datiNazionali[-which.max(datiNazionali$nuovi_testati),]
+temp = datiNazionali
+temp = temp %>% filter(data >= '2020-04-25')
+
 polyEstimate = loess(data = temp, nuovi_positivi ~ nuovi_testati)
 newData = seq(min(temp$nuovi_testati, na.rm = TRUE), max(temp$nuovi_testati, na.rm = TRUE), length.out = 200)
 previsione = predict(polyEstimate, data.frame(nuovi_testati = newData))
