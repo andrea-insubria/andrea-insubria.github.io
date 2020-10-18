@@ -192,9 +192,9 @@ plyNazNuovi
 
 ```
 
-I nuovi casi sono quelli osservati in un giorno, mentre la variazione positivi ($saldo_i$) del giorno $i$ è dato da
+I nuovi casi sono quelli osservati in un giorno, mentre la variazione positivi ($\delta_i$) del giorno $i$ è dato da
 \[
-saldo_{i} = positivi_{i-1} + nuoviCasi_{i} - guariti_{i} - decessi_{i}.
+\delta{i} = positivi_{i-1} + nuoviCasi_{i} - guariti_{i} - decessi_{i}.
 \]
 
 :::
