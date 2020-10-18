@@ -18,6 +18,7 @@ slug: covid_riassunto
 
 
 ```{r echo=FALSE, warning=FALSE, include=FALSE}
+rm(list = ls())
 require(plotly)
 require(tidyverse)
 require(sf)
@@ -176,22 +177,22 @@ Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto c
 
 ::: {}
 
-#### Positivi
+#### Andamento nuovi casi e positivi
 
 ```{r echo=FALSE}
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = '', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1) 
 
 plyNazNuovi = datiNazionali %>% 
-  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi infetti</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi infetti') %>% 
-  add_lines(x = ~data, y = ~variazione_totale_positivi, hovertemplate = paste('<b>Saldo positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Saldo positivi") %>% 
+  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi casi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi casi') %>% 
+  add_lines(x = ~data, y = ~variazione_totale_positivi, hovertemplate = paste('<b>Variazione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Variazione positivi") %>% 
   layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(orientation = 'h')) 
 
 plyNazNuovi
 
 ```
 
-I nuovi infetti sono il numero di casi che sono stati osservati in un giorno, mentre il saldo positivi ($saldo_i$) del giorno $i$ è dato da
+I nuovi casi sono quelli osservati in un giorno, mentre la variazione positivi ($saldo_i$) del giorno $i$ è dato da
 \[
 saldo_{i} = positivi_{i-1} + nuoviCasi_{i} - guariti_{i} - decessi_{i}.
 \]
