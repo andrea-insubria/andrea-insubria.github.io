@@ -453,6 +453,51 @@ plyRegTamp= datiRegioni %>% mutate(tasso = casi_testati / popolazione * 1000) %>
 plyRegTamp
 ```
 :::
+
+:::{}
+#### Nuovi casi da attività clinica vs screening
+```{r echo = FALSE, warning= FALSE}
+## grafico con la decomposizione dei nuovi casi giornalieri in tamponi positivi da attività clinica (diagnostici) o da attività di screening 
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = '', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Percentuale', range = list(0,100), mirror = 'all', titlefont = f1)
+
+plyScreening = datiRegioni %>% 
+  group_by(denominazione_regione) %>% 
+  mutate(delta_screening = c(0, diff(casi_da_screening)) / nuovi_positivi * 100) %>% 
+  filter(data >= "2020-07-23") %>% 
+  plot_ly(x = ~data, y = ~delta_screening, colors = ~denominazione_regione, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Casi da screening</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>%
+  layout(yaxis = axis_y, xaxis = axis_x)
+plyScreening
+```
+
+Nel grafico è rappresentata la proporzione di nuovi casi che sono stati individuati con test di screening, il complemento a 100 rappresenta la proporzione di casi da attività clinica. Per capire gli andamenti è meglio considerare poche regioni alla volta.
+
+Per Marche e Calabria è possibile che i dati non siano affidabili, infatti sono rispettivamente uguali a 0 e a 100 ogni giorno (o quasi).
+:::
+
+:::{}
+### Nuovi casi rispetto ad individui testati
+```{r echo = FALSE, warning = FALSE}
+
+## grafico del rapporto tra nuovi casi e numero di individui testati 
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, range = list(0, 40), showline = T, title = '% casi rispetto individui testati', mirror = 'all', titlefont = f1)
+
+plyTestatiCasiReg = datiRegioniGrouped %>% 
+  filter(data >= "2020-04-28") %>% 
+  mutate(nuovi_casi_testati = c(0, diff(casi_testati))) %>% 
+  plot_ly(x = ~data, y = ~nuovi_positivi / nuovi_casi_testati*100, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Prop. positivi su testati</b>: %{y}', '<br><b>Data: </b>: %{x}<br>'), line = list(width = 1.2), name = ~denominazione_regione) %>%
+  layout(xaxis = axis_x, yaxis = axis_y)
+plyTestatiCasiReg
+
+```
+
+:::
+
+
+
+
+
 ::::
 
 ### Situazione internazionale
