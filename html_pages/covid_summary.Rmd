@@ -476,7 +476,7 @@ Per Marche e Calabria è possibile che i dati non siano affidabili, infatti sono
 :::
 
 :::{}
-### Nuovi casi rispetto ad individui testati
+#### Nuovi casi rispetto ad individui testati
 ```{r echo = FALSE, warning = FALSE}
 
 ## grafico del rapporto tra nuovi casi e numero di individui testati 
