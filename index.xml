@@ -2,47 +2,47 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Andrea Martinelli website</title>
-    <link>/</link>
+    <link>https://andrea-insubria.github.io/</link>
     <description>Recent content on Andrea Martinelli website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>it</language>
-    <lastBuildDate>Tue, 20 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://andrea-insubria.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Un occhio alla situazione regionale</title>
-      <link>/blog/2020/covid_reg/</link>
-      <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+      <link>https://andrea-insubria.github.io/blog/2020/covid_reg/</link>
+      <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2020/covid_reg/</guid>
+      <guid>https://andrea-insubria.github.io/blog/2020/covid_reg/</guid>
       <description>Attenzione
-I dati sono aggiornati al 20/10/2020. I commenti sono quelli del post originale del 16 Aprile 2020.
+I dati sono aggiornati al 21/10/2020. I commenti sono quelli del post originale del 16 Aprile 2020.
   Il fine del post è solo di illustrare graficamente alcuni aspetti della pandemia in Italia, quindi niente previsioni e niente letture critiche per quanto riguarda l’operato di “chiunque”.
 Ricordo anche che purtroppo i dati sono poco affidabili per tante e valide ragioni, quindi le conclusioni che si possono trarre sono da prendere con le pinze.</description>
     </item>
     
     <item>
       <title>Un vista d&#39;insieme</title>
-      <link>/blog/2020/covid_generale/</link>
-      <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+      <link>https://andrea-insubria.github.io/blog/2020/covid_generale/</link>
+      <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2020/covid_generale/</guid>
+      <guid>https://andrea-insubria.github.io/blog/2020/covid_generale/</guid>
       <description>Attenzione
-I dati sono aggiornati al 20/10/2020.
+I dati sono aggiornati al 21/10/2020.
  Nel post di oggi abbiamo una serie di grafici dai post precedenti (ed alcuni leggermente diversi), che possono servire per riassumere l’andamento e la situazione attuale.
 Per una questione di impaginazione il post si trova QUA.</description>
     </item>
     
     <item>
       <title>Un&#39;analisi esplorativa grafica dei dati sul covid-19</title>
-      <link>/blog/2020/covid_naz/</link>
-      <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+      <link>https://andrea-insubria.github.io/blog/2020/covid_naz/</link>
+      <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2020/covid_naz/</guid>
+      <guid>https://andrea-insubria.github.io/blog/2020/covid_naz/</guid>
       <description>Attenzione
-I dati sono aggiornati al 20/10/2020. I commenti sono quelli del post original del 9 Aprile 2020.
+I dati sono aggiornati al 21/10/2020. I commenti sono quelli del post original del 9 Aprile 2020.
 Ho aggiornato aggiungendo due links alla fine del post.
   I dati che ho utilizzato si possono trovare sul sito del progetto della protezione civile su github, che sono qua
  Introduzione Questo post ha il solo obiettivo di rappresentare graficamente i dati che giornalmente diffonde la protezione civile sulla diffusione del coronavirus nel nostro paese.</description>
@@ -50,32 +50,32 @@ Ho aggiornato aggiungendo due links alla fine del post.
     
     <item>
       <title>Vediamo l&#39;Europa </title>
-      <link>/blog/2020/covid_eur/</link>
-      <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+      <link>https://andrea-insubria.github.io/blog/2020/covid_eur/</link>
+      <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2020/covid_eur/</guid>
+      <guid>https://andrea-insubria.github.io/blog/2020/covid_eur/</guid>
       <description>Attenzione
-I dati sono aggiornati al 20/10/2020. I commenti sono quelli del post originale del 27 Aprile 2020.
+I dati sono aggiornati al 21/10/2020. I commenti sono quelli del post originale del 27 Aprile 2020.
  I dati Oggi cerchiamo di riassumere l’andamento del COVID a livello europeo e determinare quale è, anche solo indicativamente lo stato dell’Italia rispetto a quello degli altri paesi europei, rispetto alla pandemia.
 I dati utilizzati oggi sono scaricabili dal sito del European Centre for Disease Prevention and Control.</description>
     </item>
     
     <item>
       <title>Test new post</title>
-      <link>/post/newpost/</link>
+      <link>https://andrea-insubria.github.io/post/newpost/</link>
       <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/newpost/</guid>
+      <guid>https://andrea-insubria.github.io/post/newpost/</guid>
       <description>Here is the first Div.
 str(iris) ## &amp;#39;data.frame&amp;#39;: 150 obs. of 5 variables: ## $ Sepal.Length: num 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ... ## $ Sepal.Width : num 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ... ## $ Petal.Length: num 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ... ## $ Petal.Width : num 0.2 0.2 0.2 0.</description>
     </item>
     
     <item>
       <title>Fate le vostre analisi</title>
-      <link>/blog/2020/analisi_r/</link>
+      <link>https://andrea-insubria.github.io/blog/2020/analisi_r/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2020/analisi_r/</guid>
+      <guid>https://andrea-insubria.github.io/blog/2020/analisi_r/</guid>
       <description>Cosa si fa oggi Oggi impariamo (velocemente) ad importare i dati e a fare dei grafici con R. Gli esempi che prendiamo in considerazione sono i dati che vanno di più negli ultimi mesi, cioé i dati su COVID 19. In particolare, ci concentriamo sui dati che sono divulgati dalla protezione civile.
 Attenzione
 In alto a destra nei riquadri con il codice c’è un’icona, cliccando sull’icona si copia tutto il codice del riquadro, che può essere inserito in R per farlo girare1 .</description>
@@ -83,19 +83,19 @@ In alto a destra nei riquadri con il codice c’è un’icona, cliccando sull’
     
     <item>
       <title>Il modello epidemiologico SIRD</title>
-      <link>/blog/2020/sird/</link>
+      <link>https://andrea-insubria.github.io/blog/2020/sird/</link>
       <pubDate>Mon, 27 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2020/sird/</guid>
+      <guid>https://andrea-insubria.github.io/blog/2020/sird/</guid>
       <description>Introduzione Ci sono una miriade di modelli epidemiologici per descrivere lo sviluppo di un virus in una popolazione, quello che consideriamo nel post è uno dei più semplici. Ricordiamo che possiamo studiare modelli estremamante complessi e che si adattano molto meglio al fenomeno, ma il problmea è che se non si hanno dati adeguati dal punto di vista statistico non sono particolarmente utili.</description>
     </item>
     
     <item>
       <title>Symmetric distributions</title>
-      <link>/blog/2020/symmetric-distributions/</link>
+      <link>https://andrea-insubria.github.io/blog/2020/symmetric-distributions/</link>
       <pubDate>Sat, 04 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2020/symmetric-distributions/</guid>
+      <guid>https://andrea-insubria.github.io/blog/2020/symmetric-distributions/</guid>
       <description>Quelli che seguono sono appunti disordinati sulle distribuzioni uniformi sul disco e la circonferenza. Queste sono l’ingrediente base per l’introduzione delle distribuzioni sferiche e, in seguito, \(\ell^p\)-simmetriche.
   Spero non ci siano errori, in caso contrario fatemelo sapere
  In this section we study the uniform distribution on the disc and on the circumference, in these cases many properties have a simple intuitive meaning. In the following section we will generalize these distribution to the \(d\)–dimensional case.</description>
@@ -103,19 +103,19 @@ In alto a destra nei riquadri con il codice c’è un’icona, cliccando sull’
     
     <item>
       <title>Contatti</title>
-      <link>/contact/</link>
+      <link>https://andrea-insubria.github.io/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/contact/</guid>
+      <guid>https://andrea-insubria.github.io/contact/</guid>
       <description>Contatto diretto Se preferite contattarmi direttamente dal sito è sufficiente riempire il modulo. Cercherò di rispondere al più presto.</description>
     </item>
     
     <item>
       <title>Didattica</title>
-      <link>/didattica/</link>
+      <link>https://andrea-insubria.github.io/didattica/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/didattica/</guid>
+      <guid>https://andrea-insubria.github.io/didattica/</guid>
       <description>Modalità di esame straordinarie per emergenza COVID
 Come dovreste sapere per via dell’emergenza il Rettore ha ritenuto opportuno mantenere le modalità di esame online sino a settembre 2020. L’Ateneo ha specificato le linee guida per lo svolgimento di tali esami online.
 In questa pagina potete trovare un estratto delle linee guida per quanto riguarda le modalità di esame del corso di statistica.
@@ -124,10 +124,10 @@ In questa pagina potete trovare un estratto delle linee guida per quanto riguard
     
     <item>
       <title>Modalità di esame COVID-19</title>
-      <link>/pagine_didattica/modalita_esame_covid/</link>
+      <link>https://andrea-insubria.github.io/pagine_didattica/modalita_esame_covid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/pagine_didattica/modalita_esame_covid/</guid>
+      <guid>https://andrea-insubria.github.io/pagine_didattica/modalita_esame_covid/</guid>
       <description>Di seguito riporto un estratto da “Linee guida per lo svolgimento di esami a distanza”, l’estratto comprende solo la parte riguardante l’esame di Statistica. La versione integrale del documento si può scaricare da questa pagina.
 Nelle parti riportate delle linee guida sono sottolineati/enfatizzati alcune regole che sono particolarmente importanti.
 1. Indicazioni generali
@@ -137,19 +137,19 @@ Nelle parti riportate delle linee guida sono sottolineati/enfatizzati alcune reg
     
     <item>
       <title>Ricerca</title>
-      <link>/ricerca/</link>
+      <link>https://andrea-insubria.github.io/ricerca/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/ricerca/</guid>
+      <guid>https://andrea-insubria.github.io/ricerca/</guid>
       <description>Interessi di ricerca Statistica  Statistica bayesiana non-parametrica: risultati asintotici Serie storiche: analisi nel dominio dello spettro Modelli lineari spaziali: risultati asintotici e applicazioni   Probabilità  random sums, passeggiate aleatorie e principi delle grandi deviazioni processi di Lévy e distribuzioni infinitamente divisibili Distribuzioni sferiche, simmetriche e applicazioni.    Lavori Pubblicati  Donatelli, Marco; Luati, Alessandra; Martinelli, Andrea. Spectral filtering for trend estimation, Atti SIS. Casini, Emanuele; Le Caër, Gérard; Martinelli, Andrea.</description>
     </item>
     
     <item>
       <title>Risorse utili</title>
-      <link>/risorse/</link>
+      <link>https://andrea-insubria.github.io/risorse/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/risorse/</guid>
+      <guid>https://andrea-insubria.github.io/risorse/</guid>
       <description>Risorse per ricerche bibliografiche Alcuni link utili per le ricerche bibliografiche (sono utilizzabili solo da reti di enti sottoscrittori):
  Mathscinet J-Stor Scopus Arxiv Google Scholar   Software statistici C’è una moltitudine di software statistici, quelli a cui si fa riferimento qui di seguito sono o gratuiti o prevedono almeno una distribuzione gratuita
  R-project: è un linguaggio/programma di analisi statistica. R è a linea di comando e nella distribuzione standard è prevista la console e un editor molto semplice.</description>
@@ -157,10 +157,10 @@ Nelle parti riportate delle linee guida sono sottolineati/enfatizzati alcune reg
     
     <item>
       <title>Statistica A</title>
-      <link>/pagine_didattica/statistica_a_2015_2016/</link>
+      <link>https://andrea-insubria.github.io/pagine_didattica/statistica_a_2015_2016/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/pagine_didattica/statistica_a_2015_2016/</guid>
+      <guid>https://andrea-insubria.github.io/pagine_didattica/statistica_a_2015_2016/</guid>
       <description>Programma
 Modalità di esame
 Orari lezioni
@@ -170,10 +170,10 @@ Orari lezioni
     
     <item>
       <title>Statistica A</title>
-      <link>/pagine_didattica/statistica_b_2020_2021/</link>
+      <link>https://andrea-insubria.github.io/pagine_didattica/statistica_b_2020_2021/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/pagine_didattica/statistica_b_2020_2021/</guid>
+      <guid>https://andrea-insubria.github.io/pagine_didattica/statistica_b_2020_2021/</guid>
       <description>Programma
 Bibliografia
 Modalità di esame
