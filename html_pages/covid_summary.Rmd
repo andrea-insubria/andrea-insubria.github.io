@@ -63,7 +63,7 @@ knitr::opts_chunk$set(fig.width=7)
 ::: {}
 #### Tamponi
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 datiNazionali$nuovi_tamponi = c(datiNazionali$tamponi[1], diff(datiNazionali$tamponi))
 datiNazionali$nuovi_testati = c(NA, diff(datiNazionali$casi_testati))
 datiNazionali$nuovi_decessi = c(NA, diff(datiNazionali$deceduti))
@@ -96,6 +96,7 @@ La linea della serie lisciata è semplicemente una media mobile all'indietro con
 
 
 :::
+
 
 :::{}
 
@@ -502,7 +503,7 @@ plyTestatiCasiReg
 
 ### Situazione internazionale
 
-```{r echo=FALSE, include=FALSE}
+```{r echo=FALSE, include=FALSE, warning = FALSE}
 ### load packages ####
 library(plotly)
 library(sf)
@@ -521,6 +522,7 @@ prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dat
 ########################################
 
 nationalCode = read_csv(paste0(prefixDir,'/world_shape/country-and-continent-codes-list-csv_csv.csv'))
+
 
 
 nationalCode = nationalCode %>% arrange(Continent_Code)
