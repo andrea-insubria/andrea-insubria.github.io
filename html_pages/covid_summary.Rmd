@@ -94,12 +94,9 @@ plyNazTamponi
 
 La linea della serie lisciata è semplicemente una media mobile all'indietro con coefficienti costanti del numero di tamponi o, molto più semplicemente la media dei precedenti sette valori compreso quello del giorno stesso. In questo modo si cerca di togliere la componente periodica connessa al giorno della settimana ed estrapolare l'andamento della serie.
 
-
 :::
 
-
 :::{}
-
 #### Nuovi casi rispetto al numero di tamponi
 ```{r echo=FALSE}
 ## nuovi positivi vs tamponi
@@ -176,7 +173,7 @@ Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto c
 
 :::
 
-::: {}
+:::{}
 
 #### Andamento nuovi casi e positivi
 
