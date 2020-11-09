@@ -192,8 +192,9 @@ plyNazNuovi
 ```
 
 I nuovi casi sono quelli osservati in un giorno, mentre la variazione positivi ($\delta_i$) del giorno $i$ è dato da
+
 \[
-\delta{i} = positivi_{i-1} + nuoviCasi_{i} - guariti_{i} - decessi_{i}.
+\delta_{i} = positivi_{i-1} + nuoviCasi_{i} - guariti_{i} - decessi_{i}.
 \]
 
 :::
@@ -211,7 +212,7 @@ axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = '%
 plyTestatiCasi = variazioniGiornaliere %>% filter(variazioniGiornaliere$data >= "2020-04-21") %>%
   mutate(prop_nuovi_casi = nuovi_casi / nuovi_casi_testati*100) %>% 
   plot_ly(x = ~data, y = ~prop_nuovi_casi, type = 'scatter', mode = 'lines', showlegend = FALSE, name = 'Prop', color = I("dodgerblue2"), hovertemplate = paste('<b>Prop. positivi su testati</b>: %{y}', '<br><b>Data: </b>: %{x}<br>', '<extra></extra>'), line = list(width = 2)) %>%
-    add_lines(y = ~filterWeek(prop_nuovi_casi), name = "Prop. lisciata", color = I("dodgerblue2"), line = list(dash = 'dash', width = 2.0), hovertemplate = paste('serie lisciata', '<extra></extra>')) %>%
+    add_lines(y = ~filterWeek(prop_nuovi_casi), name = "Prop. lisciata", color = I("red3"), line = list(dash = 'dash', width = 2.0), hovertemplate = paste('serie lisciata', '<extra></extra>')) %>%
   layout(xaxis = axis_x, yaxis = axis_y)
 plyTestatiCasi
 
