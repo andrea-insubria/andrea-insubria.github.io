@@ -183,8 +183,11 @@ axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = ''
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1) 
 
 plyNazNuovi = datiNazionali %>% 
-  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi casi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi casi') %>% 
-  add_lines(x = ~data, y = ~variazione_totale_positivi, hovertemplate = paste('<b>Variazione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Variazione positivi") %>% 
+  mutate(nuovi_positivi_smooth = filterWeek(nuovi_positivi), variazione_totale_positivi_smooth = filterWeek(variazione_totale_positivi)) %>% 
+  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi casi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi casi', color = I("dodgerblue2")) %>% 
+add_lines(x = ~data, y = ~nuovi_positivi_smooth, hovertemplate = paste('<b>Casi smooth</b>','<extra></extra>'), name = "Smooth casi", color = I("dodgerblue2"), line = list(dash = 'dash', width = 1.5)) %>% 
+  add_lines(x = ~data, y = ~variazione_totale_positivi, hovertemplate = paste('<b>Variazione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Var. positivi", color = I("orange")) %>% 
+add_lines(x = ~data, y = ~variazione_totale_positivi_smooth, hovertemplate = paste('<b>Positivi smooth</b>','<extra></extra>'), name = "Smooth positivi", color = I("orange"), line = list(dash = 'dash', width = 1.5)) %>% 
   layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(orientation = 'h')) 
 
 plyNazNuovi
