@@ -6,7 +6,7 @@
     <description>Recent content in Blogs on Andrea Martinelli website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>it</language>
-    <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://andrea-insubria.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,34 +14,34 @@
     <item>
       <title>Situazione nel mondo</title>
       <link>https://andrea-insubria.github.io/blog/2020/covid_world/</link>
-      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://andrea-insubria.github.io/blog/2020/covid_world/</guid>
       <description>Attenzione
-I dati sono aggiornati al 23/11/2020.
+I dati sono aggiornati al 24/11/2020.
  I dati In questo post riportiamo una tabella con i dati odierni della pandemia nel mondo, i dati come quelli di altri post sono quelli dal sito del European Centre for Disease Prevention and Control.
- {&#34;x&#34;:{&#34;url&#34;:&#34;/blog/post_covid_world_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]} Nella tabella sono raccolti i dati di 2020-11-23, nella tabella è possibile ordinare sulla base delle variabili e/o ricercare con il nome dello stato.</description>
+ {&#34;x&#34;:{&#34;url&#34;:&#34;/blog/post_covid_world_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]} Nella tabella sono raccolti i dati di 2020-11-24, nella tabella è possibile ordinare sulla base delle variabili e/o ricercare con il nome dello stato.</description>
     </item>
     
     <item>
       <title>Situazione provinciale odierna</title>
       <link>https://andrea-insubria.github.io/blog/2020/covid_prov/</link>
-      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://andrea-insubria.github.io/blog/2020/covid_prov/</guid>
       <description>Attenzione
-I dati sono aggiornati al 23/11/2020
+I dati sono aggiornati al 24/11/2020
  Le province  I dati I dati delle province sono meno accurati di quelli a livello regionale e nazionale. In particolare ci sono numerosi casi in via di definizione, quindi che non sono ancora stati assegnati a nessuna provincia o, come da descrizione del formato dati della protezione civile utile ad indicare i dati ancora non assegnati alle Province.</description>
     </item>
     
     <item>
       <title>Un occhio alla situazione regionale</title>
       <link>https://andrea-insubria.github.io/blog/2020/covid_reg/</link>
-      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://andrea-insubria.github.io/blog/2020/covid_reg/</guid>
       <description>Attenzione
-I dati sono aggiornati al 23/11/2020. I commenti sono quelli del post originale del 16 Aprile 2020.
+I dati sono aggiornati al 24/11/2020. I commenti sono quelli del post originale del 16 Aprile 2020.
   Il fine del post è solo di illustrare graficamente alcuni aspetti della pandemia in Italia, quindi niente previsioni e niente letture critiche per quanto riguarda l’operato di “chiunque”.
 Ricordo anche che purtroppo i dati sono poco affidabili per tante e valide ragioni, quindi le conclusioni che si possono trarre sono da prendere con le pinze.</description>
     </item>
@@ -49,11 +49,11 @@ Ricordo anche che purtroppo i dati sono poco affidabili per tante e valide ragio
     <item>
       <title>Un vista d&#39;insieme</title>
       <link>https://andrea-insubria.github.io/blog/2020/covid_generale/</link>
-      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://andrea-insubria.github.io/blog/2020/covid_generale/</guid>
       <description>Attenzione
-I dati sono aggiornati al 23/11/2020.
+I dati sono aggiornati al 24/11/2020.
  Nel post di oggi abbiamo una serie di grafici dai post precedenti (ed alcuni leggermente diversi), che possono servire per riassumere l’andamento e la situazione attuale.
 Per una questione di impaginazione il post si trova QUA.</description>
     </item>
@@ -61,11 +61,11 @@ Per una questione di impaginazione il post si trova QUA.</description>
     <item>
       <title>Un&#39;analisi esplorativa grafica dei dati sul covid-19</title>
       <link>https://andrea-insubria.github.io/blog/2020/covid_naz/</link>
-      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://andrea-insubria.github.io/blog/2020/covid_naz/</guid>
       <description>Attenzione
-I dati sono aggiornati al 23/11/2020. I commenti sono quelli del post original del 9 Aprile 2020.
+I dati sono aggiornati al 24/11/2020. I commenti sono quelli del post original del 9 Aprile 2020.
 Ho aggiornato aggiungendo due links alla fine del post.
   I dati che ho utilizzato si possono trovare sul sito del progetto della protezione civile su github, che sono qua
  Introduzione Questo post ha il solo obiettivo di rappresentare graficamente i dati che giornalmente diffonde la protezione civile sulla diffusione del coronavirus nel nostro paese.</description>
@@ -74,11 +74,11 @@ Ho aggiornato aggiungendo due links alla fine del post.
     <item>
       <title>Vediamo l&#39;Europa </title>
       <link>https://andrea-insubria.github.io/blog/2020/covid_eur/</link>
-      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://andrea-insubria.github.io/blog/2020/covid_eur/</guid>
       <description>Attenzione
-I dati sono aggiornati al 23/11/2020. I commenti sono quelli del post originale del 27 Aprile 2020.
+I dati sono aggiornati al 24/11/2020. I commenti sono quelli del post originale del 27 Aprile 2020.
  I dati Oggi cerchiamo di riassumere l’andamento del COVID a livello europeo e determinare quale è, anche solo indicativamente lo stato dell’Italia rispetto a quello degli altri paesi europei, rispetto alla pandemia.
 I dati utilizzati oggi sono scaricabili dal sito del European Centre for Disease Prevention and Control.</description>
     </item>
