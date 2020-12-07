@@ -1,0 +1,23 @@
+---
+title: "Una esplorazione dei dati sul covid-19"
+output: bookdown::html_document2
+---
+
+```{r include=FALSE}
+library(gapminder)
+```
+```{r include=FALSE}
+source('analisi_grafica_protezione_civile.R')
+```
+
+
+  ```{r nuovi-naz-plot, fig.cap = "Nuovi casi a livello nazionale", fig.align = "center", echo = FALSE}
+plyNazNuovi
+```
+
+Australia's life expectancy has increased a great deal over the past 50 years
+
+(See Figure \@ref(fig:nuovi-naz-plot))
+  
+  
+    

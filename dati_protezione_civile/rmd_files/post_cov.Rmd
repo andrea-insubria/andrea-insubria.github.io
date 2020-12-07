@@ -1,0 +1,89 @@
+---
+title: "Un'analisi esplorativa grafica dei dati sul covid-19"
+output: bookdown::html_document2
+---
+
+```{r include=FALSE}
+source('~/Documents/lavotex/lavori/covid_19/covid_19_RFiles/dati_protezione_civile/grafici_pagina.R')
+```
+
+
+# Introduzione 
+Questo post ha il solo obiettivo di rappresentare graficamente i dati che giornalmente diffonde la protezione civile sulla diffusione del coronavirus nel nostro paese.
+
+Non ci sono modelli per fare previsioni sull'andamento della diffusion della malattia, ma se ne possono trovare attualmente praticamente ovunque, più o meno sensati, più o meno affidabili dal punto di vista previsivo.
+
+Per ora non ho incluso i dati a livello provinciale, perché fino a poco tempo fa (almeno fino a che li ho guardati), sembravano abbastanza inaffidabili. Questa non è ovviamente una critica a chi li raccoglie, ma semplicemente una osservazione, anche perché in questo momento negli ospedali e fuori da essi, ci sono ben altri problemi.
+
+> I grafici che troverete nella pagina sono interattivi (si veda *plotly* per *R*) quindi passandoci sopra con il puntatore otterrete informazioni sull'oggetto, inoltre ove presente la legenda se si fa un doppio click si isola **solo* l'elemento desiderato, mentre con un click singolo si aggiunge o si toglie.
+
+
+# Dati a livello nazionale
+I dati a livello nazionale che analizzo sono quelli resi pubblici con l'ultimo bollettino della protezione civile.
+
+## Andamento generale epidemia
+In Figura \@ref(fig:nuovi-naz-plot) è rappresentato l'andamento nazionale dei nuovi contagi a partire da Febbraio ad arrivare ad oggi. Il grafico è interattivo, quindi si può ingrandire, rimpicciolire, etc. inoltre passando sulla curva si può vedere la numerosità dei nuovi casi in ogni giorno.
+
+```{r nuovi-naz-plot, fig.cap = "Nuovi casi a livello nazionale", fig.align= "center",echo=FALSE}
+plyNazNuovi
+```
+
+In Figura \@ref(fig:naz-tot) è rappresentato l'andamento dei casi totali, nonché ricoverati con sintomi lievi, numero di ricoverati in terapia intensiva e dimessi poiché guariti. Già da questo grafico si vede che il numero di ricoverati in terapia intensiva, almeno nell'ultimo periodo, tende a rimanere stabile. Questi aspetti sono anche evidenziati dai due grafici seguenti: nel primo vediamo la decomposizione dei positivi in frequenza assoluta tra terapia intensiva, isolamento domiciliare e ricoverati, mentre nel secondo vediamo la stessa decomposizione, ma in percentuale.
+
+Un altro aspetto positivo è che anche la curva dei dimessi per guarigione sta diventando più ripida. 
+
+```{r naz-tot, fig.cap="Andamento dei totali a livello nazionale di positivi, ricoverati, etc.", fig.align= "center", echo=FALSE}
+plyNazTot
+```
+
+## Ripartizione degli infetti
+In Figura \@ref(fig:pos-dec) è mostrato l'andamento della ripartizione dei malati divisi in base alla tipologia di trattamento, in cui si distinguono quelli messi in isolamento, quelli ricoverati con sintomi lievi ed infine i ricoverati in terapia intensiva.
+
+```{r pos-dec, fig.cap="Ripartizione dei positivi al COVID-19 sulla base del trattamento ", fig.align= "center", echo=FALSE}
+plyDecPos
+plyDecPerc
+plyDecTrend
+```
+
+Nel primo grafico si vede la ripartizione in frequenze assolute, in cui si evidenzia la crescita del numero di casi e una differente ripartizione nel tempo, infatti i pazienti in isolamento sono in aumento, mentre in termini assoluti e relativi.
+
+Nel secondo grafico invece è rapperesentata la ripartizione in percentuale, in questo caso è ancora più evidente come la proporzione di pazienti in terapia intensiva è in diminuzione a partire dal 10 marzo circa. Questo fenomeno non dovrebbe essere connesso al raggiungimento del tetto di posti letto e ad una loro diminuzione.
+
+Nel terzo grafico infine è ancora più evidente che a partire dalla fine di marzo si è assistito ad una diminuzione del numero di ricoverati sia per sintomi lievi, sia per la terapia intensiva. Ma prima di questa inversione si vedevano già dei cambiamenti, quelli che si può pensare siano gli effetti delle politiche di distanziamento sociale. Sottolineiamo che il tempo di attesa per valutare l'efficia delle politiche è all'incirca quello previsto dagli epidemiologi.
+
+## I tamponi e i loro risultati
+
+In Figura \@ref(fig:tamp-pos) sono rappresentati, facendo riferimento all'asse delle ordinate di sinistra, la percentuale di tamponi risultati positivi, mentre sulla destra il numero di nuovi infetti in migliaia. Come si vede dalla Figura \@ref(fig:nuovi-naz-plot) il numero di tamponi fatti quotidianamente sono nettamente aumentati, questo è evidenziato in qualche modo anche dall'ultimo grafico, infatti la percentuale di tamponi positivi sta diminuendo, probabilmente si sta tornando a farli in modo più diffuso.
+
+```{r tamp-pos, fig.cap="Nel grapfico sono rappresentati la proporzione dei tamponi positivi e e il numero di nuovi casi quotidiano", fig.align= "center", echo=FALSE}
+plyTamponi
+plyTampCases
+```
+
+Nel secondo grafico, strettamente connesso al primo, sono rappresentati il numero di nuovi casi rispetto al numero dei campioni. Dall'analisi del grafico si vede che il numero di casi positivi continua a crescere rispetto al numero di tamponi sino a che si fanno al più 25k-30k tamponi, oltre questo numero la proporzione di positivi tende a scendere. Notiamo che i punti corrispondenti ad un numero più elevato di tamponi sono quelli più recenti, come si vede dal colore dei punti.
+
+## Tassi di variazione
+
+In Figura \@ref{fig:delta-all} sono stati rappresentati i tassi di variazione percentuale quotidiani delle variabili: indicato con $X(t)$ il valore della variabile $X$ al tempo $t$, i tassi rappresentati sono
+$$
+\Delta(t+1) = \frac{X(t+1) - X(t)}{X(t)}.
+$$
+Quindi queste serie sono costanti se la variabile cresce linearmente, mentre hanno trend sub--lineare se la successione dei tassi è decrescente.
+
+Il grafico è, a prima vista, piuttosto confuso ma è costruito in modo tale che si possano scegliere le serie delle variazioni che si intendono confrontare.
+
+```{r delta-all, fig.cap="Nel grafico sono rappresentati i tassi di variazione percentuale delle principali variabili", fig.align= "center", echo=FALSE}
+plyDelta
+```
+
+È interessante osservare che a partire dalla seconda metà di marzo è iniziata un'inversione di tendenza piuttosto decisa.
+
+
+# Dati a livello regionale
+A livello regionale sono evidenti i fatti di cui sentiamo parlare quotidianamente sulla diffusione eterogenea del virus sul territorio nazionale, come mostrato in Figura \@ref{fig:regioni-casi}.
+
+```{r regioni-casi, fig.cap="Rappresentazione del numero di casi per regione", fig.align= "center", echo=FALSE}
+plyCasi
+```
+
+Il resto a seguire...
