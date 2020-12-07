@@ -4,17 +4,52 @@
   
   <url>
     <loc>http://andreamartinelli.altervista.org/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://andreamartinelli.altervista.org/blog/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://andreamartinelli.altervista.org/tags/covid/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_world/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_prov/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://andreamartinelli.altervista.org/tags/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_reg/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_generale/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_naz/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_eur/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -33,28 +68,8 @@
   </url>
   
   <url>
-    <loc>http://andreamartinelli.altervista.org/tags/</loc>
-    <lastmod>2020-04-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://andreamartinelli.altervista.org/blog/2020/04/27/sird/</loc>
     <lastmod>2020-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://andreamartinelli.altervista.org/blog/2020/04/27/covid_eur/</loc>
-    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://andreamartinelli.altervista.org/blog/2020/04/16/covid_reg/</loc>
-    <lastmod>2020-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://andreamartinelli.altervista.org/blog/2020/04/09/covid_naz/</loc>
-    <lastmod>2020-04-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -100,7 +115,7 @@
   </url>
   
   <url>
-    <loc>http://andreamartinelli.altervista.org/pagine_didattica/didattica/</loc>
+    <loc>http://andreamartinelli.altervista.org/pagine_didattica/modalita_esame_covid/</loc>
   </url>
   
   <url>
@@ -117,6 +132,10 @@
   
   <url>
     <loc>http://andreamartinelli.altervista.org/pagine_didattica/statistica_a_2015_2016/</loc>
+  </url>
+  
+  <url>
+    <loc>http://andreamartinelli.altervista.org/pagine_didattica/statistica_b_2020_2021/</loc>
   </url>
   
 </urlset>

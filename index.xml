@@ -6,10 +6,82 @@
     <description>Recent content on Andrea Martinelli website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>it</language>
-    <lastBuildDate>Wed, 29 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Dec 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://andreamartinelli.altervista.org/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Situazione nel mondo</title>
+      <link>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_world/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_world/</guid>
+      <description>Attenzione
+I dati sono aggiornati al 07/12/2020.
+ I dati In questo post riportiamo una tabella con i dati odierni della pandemia nel mondo, i dati come quelli di altri post sono quelli dal sito del European Centre for Disease Prevention and Control.
+ {&#34;x&#34;:{&#34;url&#34;:&#34;/blog/post_covid_world_files/figure-html//widgets/widget_unnamed-chunk-2.html&#34;,&#34;options&#34;:{&#34;xdomain&#34;:&#34;*&#34;,&#34;allowfullscreen&#34;:false,&#34;lazyload&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]} Nella tabella sono raccolti i dati di 2020-12-06, nella tabella è possibile ordinare sulla base delle variabili e/o ricercare con il nome dello stato.</description>
+    </item>
+    
+    <item>
+      <title>Situazione provinciale odierna</title>
+      <link>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_prov/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_prov/</guid>
+      <description>Attenzione
+I dati sono aggiornati al 07/12/2020
+ Le province  I dati I dati delle province sono meno accurati di quelli a livello regionale e nazionale. In particolare ci sono numerosi casi in via di definizione, quindi che non sono ancora stati assegnati a nessuna provincia o, come da descrizione del formato dati della protezione civile utile ad indicare i dati ancora non assegnati alle Province.</description>
+    </item>
+    
+    <item>
+      <title>Un occhio alla situazione regionale</title>
+      <link>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_reg/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_reg/</guid>
+      <description>Attenzione
+I dati sono aggiornati al 07/12/2020. I commenti sono quelli del post originale del 16 Aprile 2020.
+  Il fine del post è solo di illustrare graficamente alcuni aspetti della pandemia in Italia, quindi niente previsioni e niente letture critiche per quanto riguarda l’operato di “chiunque”.
+Ricordo anche che purtroppo i dati sono poco affidabili per tante e valide ragioni, quindi le conclusioni che si possono trarre sono da prendere con le pinze.</description>
+    </item>
+    
+    <item>
+      <title>Un vista d&#39;insieme</title>
+      <link>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_generale/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_generale/</guid>
+      <description>Attenzione
+I dati sono aggiornati al 07/12/2020.
+ Nel post di oggi abbiamo una serie di grafici dai post precedenti (ed alcuni leggermente diversi), che possono servire per riassumere l’andamento e la situazione attuale.
+Per una questione di impaginazione il post si trova QUA.</description>
+    </item>
+    
+    <item>
+      <title>Un&#39;analisi esplorativa grafica dei dati sul covid-19</title>
+      <link>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_naz/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_naz/</guid>
+      <description>Attenzione
+I dati sono aggiornati al 07/12/2020. I commenti sono quelli del post original del 9 Aprile 2020.
+Ho aggiornato aggiungendo due links alla fine del post.
+  I dati che ho utilizzato si possono trovare sul sito del progetto della protezione civile su github, che sono qua
+ Introduzione Questo post ha il solo obiettivo di rappresentare graficamente i dati che giornalmente diffonde la protezione civile sulla diffusione del coronavirus nel nostro paese.</description>
+    </item>
+    
+    <item>
+      <title>Vediamo l&#39;Europa </title>
+      <link>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_eur/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://andreamartinelli.altervista.org/blog/2020/12/07/covid_eur/</guid>
+      <description>Attenzione
+I dati sono aggiornati al 07/12/2020. I commenti sono quelli del post originale del 27 Aprile 2020.
+ I dati Oggi cerchiamo di riassumere l’andamento del COVID a livello europeo e determinare quale è, anche solo indicativamente lo stato dell’Italia rispetto a quello degli altri paesi europei, rispetto alla pandemia.
+I dati utilizzati oggi sono scaricabili dal sito del European Centre for Disease Prevention and Control.</description>
+    </item>
     
     <item>
       <title>Fate le vostre analisi</title>
@@ -32,43 +104,6 @@ In alto a destra nei riquadri con il codice c’è un’icona, cliccando sull’
     </item>
     
     <item>
-      <title>Vediamo l&#39;Europa </title>
-      <link>http://andreamartinelli.altervista.org/blog/2020/04/27/covid_eur/</link>
-      <pubDate>Mon, 27 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>http://andreamartinelli.altervista.org/blog/2020/04/27/covid_eur/</guid>
-      <description>Attenzione
-I dati sono aggiornati al 28/04/2020. I commenti sono quelli originali.
- I dati Oggi cerchiamo di riassumere l’andamento del COVID a livello europeo e determinare quale è, anche solo indicativamente lo stato dell’Italia rispetto a quello degli altri paesi europei, rispetto alla pandemia.
-I dati utilizzati oggi sono scaricabili dal sito del European Centre for Disease Prevention and Control.</description>
-    </item>
-    
-    <item>
-      <title>Un occhio alla situazione regionale</title>
-      <link>http://andreamartinelli.altervista.org/blog/2020/04/16/covid_reg/</link>
-      <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>http://andreamartinelli.altervista.org/blog/2020/04/16/covid_reg/</guid>
-      <description>Attenzione
-I dati sono aggiornati al 28/04/2020. I commenti sono quelli originali.
-  Il fine del post è solo di illustrare graficamente alcuni aspetti della pandemia in Italia, quindi niente previsioni e niente letture critiche per quanto riguarda l’operato di “chiunque”.
-Ricordo anche che purtroppo i dati sono poco affidabili per tante e valide ragioni, quindi le conclusioni che si possono trarre sono da prendere con le pinze.</description>
-    </item>
-    
-    <item>
-      <title>Un&#39;analisi esplorativa grafica dei dati sul covid-19</title>
-      <link>http://andreamartinelli.altervista.org/blog/2020/04/09/covid_naz/</link>
-      <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>http://andreamartinelli.altervista.org/blog/2020/04/09/covid_naz/</guid>
-      <description>Attenzione
-I dati sono aggiornati al 28/04/2020. I commenti sono quelli originali.
-  I dati che ho utilizzato si possono trovare sul sito del progetto della protezione civile su github, che sono qua
-  L’ultimo aggiornamento dei dati è stato fatto il 28/04/2020
- Introduzione Questo post ha il solo obiettivo di rappresentare graficamente i dati che giornalmente diffonde la protezione civile sulla diffusione del coronavirus nel nostro paese.</description>
-    </item>
-    
-    <item>
       <title>Symmetric distributions</title>
       <link>http://andreamartinelli.altervista.org/blog/2020/04/04/symmetric-distributions/</link>
       <pubDate>Sat, 04 Apr 2020 00:00:00 +0000</pubDate>
@@ -85,7 +120,8 @@ I dati sono aggiornati al 28/04/2020. I commenti sono quelli originali.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://andreamartinelli.altervista.org/contact/</guid>
-      <description>Contatto diretto Se preferite contattarmi direttamente dal sito è sufficiente riempire il modulo. Cercherò di rispondere al più presto.</description>
+      <description>Contatto diretto Per contattarmi potete clickare sul pulsante in alto a destra con il simbolo della posta oppure scrivermi a questo indirizzo: andrea.martinelli@uninsubria.it.
+Infine, se preferite, potete contattarmi direttamente dal sito ompilando il modulo seguente. Cercherò di rispondere al più presto.</description>
     </item>
     
     <item>
@@ -101,15 +137,16 @@ In questa pagina potete trovare un estratto delle linee guida per quanto riguard
     </item>
     
     <item>
-      <title>Didattica</title>
-      <link>http://andreamartinelli.altervista.org/pagine_didattica/didattica/</link>
+      <title>Modalità di esame COVID-19</title>
+      <link>http://andreamartinelli.altervista.org/pagine_didattica/modalita_esame_covid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://andreamartinelli.altervista.org/pagine_didattica/didattica/</guid>
-      <description>Avviso  Per ragioni organizzative gli studenti che devono sostenere esami di corsi tenuti precedentemente all’Anno Accademico 2016-2017 devono contattare il docente.
- \[ \alpha = \int_a^b f(x) d x \]
- Corsi attivi  Statistica A (A.A. 2015-2016) Statistica B (A.A. 2016-2017) Statistica A (A.A. 2017-2018)   Corsi dei precedenti a.a. I corsi dei precedenti anni accademici sono:
- Statistica I - F49030 Statistica II - F49038 Economia Matematica II - F49029 Statistica e Finanza (Statistica e Applicazioni) A.</description>
+      <guid>http://andreamartinelli.altervista.org/pagine_didattica/modalita_esame_covid/</guid>
+      <description>Di seguito riporto un estratto da “Linee guida per lo svolgimento di esami a distanza”, l’estratto comprende solo la parte riguardante l’esame di Statistica. La versione integrale del documento si può scaricare da questa pagina.
+Nelle parti riportate delle linee guida sono sottolineati/enfatizzati alcune regole che sono particolarmente importanti.
+1. Indicazioni generali
+2. Indicazioni generali per gli studenti
+3. Linee guida per lo svolgimento di esami orali</description>
     </item>
     
     <item>
@@ -143,6 +180,21 @@ Modalità di esame
 Orari lezioni
    Programma Informazioni generali sul corso Il corso si svolgerà ad anni alterni, quindi A.A. 2017-2018, 2019-2020, etc
  Breve introduzione al corso L’approccio bayesiano all’inferenza sta acquisendo sempre più importanza in vari ambiti della statistica. Il fine del corso è quello di introdurre l’approccio bayesiano ai problemi di inferenza statistica parametrica. Gli argomenti trattati nel corso sono argomenti standard per l’approccio bayesiano alla statistica, per questo motivo si trovano una moltitudine di testi che coprono l’intero programma del corso (e molto altro).</description>
+    </item>
+    
+    <item>
+      <title>Statistica B</title>
+      <link>http://andreamartinelli.altervista.org/pagine_didattica/statistica_b_2020_2021/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://andreamartinelli.altervista.org/pagine_didattica/statistica_b_2020_2021/</guid>
+      <description>Programma
+Bibliografia
+Modalità di esame
+Orari lezioni
+  Programma Breve introduzione al corso Il corso prevede di coprire i seguenti argomenti:
+Richiami e integrazioni di teoria della probabilità; Definizione di modello statistico; Statistiche e teoria della stima puntuale; Stima per intervalli; Verifica di ipotesi con approccio di Neyman/Pearson e con test di significatività Modelli lineari Introduzione a problemi non parametrici  
+ Testi di consigliati Cicchitelli, G.</description>
     </item>
     
   </channel>
