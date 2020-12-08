@@ -3564,3 +3564,21 @@ a.list-group-item.active > .badge,
   left: 15px;
   right: 15px;
 }
+
+
+
+.infobox {
+  padding: 1em 1em 1em 6em;
+  margin-bottom: 10px;
+  border: 2px solid orange;
+  border-radius: 10px;
+ /* background: #66cd00 5px center/3em no-repeat;*/
+}
+
+
+.caution {
+  background-image: url('../img/caution.jpeg');
+  background-repeat: no-repeat;
+  background-size: 75px 75px;
+}
+
