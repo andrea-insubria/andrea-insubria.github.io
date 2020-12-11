@@ -1,20 +1,12 @@
 ---
-banner: img/banners/covid.png
 title: "Riassunto dei dati sul covid-19"
-date: "`r format(Sys.time(), '%d-%m-%Y')`"
-output: html_document
-tags:
-- covid
-slug: covid_riassunto
+output: 
+  flexdashboard::flex_dashboard:
+    theme: bootstrap
+    orientation: rows
+    vertical_layout: scroll
 ---
 
-<style type="text/css">
-.main-container {
-  max-width: 1500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
 
 
 ```{r echo=FALSE, warning=FALSE, include=FALSE}
@@ -22,16 +14,17 @@ rm(list = ls())
 require(plotly)
 require(tidyverse)
 require(sf)
+require(flexdashboard)
 
 prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dati_protezione_civile'
 
 temp = tail(sort(dir(paste(prefixDir,'/data/', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
 oggi = gsub('_', '-', substr(temp, nchar(temp)-15, nchar(temp)-6))
 
-if (as.Date(oggi)<Sys.Date()){
-source(paste0(prefixDir,'/importazione_dati.R'))
-temp = tail(sort(dir(paste(prefixDir,'/data/', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
-}
+# if (as.Date(oggi)<Sys.Date()){
+# source(paste0(prefixDir,'/importazione_dati.R'))
+# temp = tail(sort(dir(paste(prefixDir,'/data/', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
+# }
 
 
 load(temp)
@@ -47,23 +40,24 @@ filterWeek <- function(x){
 
 
 ## set figure dimension of r chunk
-knitr::opts_chunk$set(fig.width=7)  
+# knitr::opts_chunk$set(fig.width=7)  
 # knitr::opts_chunk$set(fig.width=8, fig.height=5.1)  
 ```
 
-<a href="/blog/">Torna indietro</a>
+<a href="/blog/">Torna al blog</a>
 
-## {.tabset}
+Tamponi {data-navmenu='Nazionale'}
+===================================== 
 
-### Nazionale 
+Row
+----------------------------------------
 
-:::: {style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; grid-auto-flow: row"}
+### Tamponi
 
 
-::: {}
-#### Tamponi
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, fig.cap="La linea della serie lisciata è semplicemente una media mobile all'indietro con coefficienti costanti del numero di tamponi o, molto più semplicemente la media dei precedenti sette valori compreso quello del giorno stesso. In questo modo si cerca di togliere la componente periodica connessa al giorno della settimana ed estrapolare l'andamento della serie."}
+
 datiNazionali$nuovi_tamponi = c(datiNazionali$tamponi[1], diff(datiNazionali$tamponi))
 datiNazionali$nuovi_testati = c(NA, diff(datiNazionali$casi_testati))
 datiNazionali$nuovi_decessi = c(NA, diff(datiNazionali$deceduti))
@@ -93,13 +87,34 @@ plyNazTamponi = datiNazionali %>%
 plyNazTamponi
 ```
 
-La linea della serie lisciata è semplicemente una media mobile all'indietro con coefficienti costanti del numero di tamponi o, molto più semplicemente la media dei precedenti sette valori compreso quello del giorno stesso. In questo modo si cerca di togliere la componente periodica connessa al giorno della settimana ed estrapolare l'andamento della serie.
+### Nuovi casi rispetto a individui testati
+```{r echo = FALSE, warning = FALSE, fig.cap="Nel grafico è rappresentato la serie storica giornaliera della percentuale di nuovi casi rispetto al numero di individui testati, si noti che il denominatore sono i nuovi individui testati e non i tamponi."}
 
-:::
+variazioniGiornaliere = datiNazionali %>% transmute(data, nuovi_casi = nuovi_positivi, casi_diagnostici = c(NA, diff(casi_da_sospetto_diagnostico)), casi_screening = c(NA, diff(casi_da_screening)), nuovi_casi_testati = c(NA, diff(casi_testati)), proporzione_diagnostici = casi_diagnostici / nuovi_casi * 100)
 
-:::{}
-#### Nuovi casi rispetto al numero di tamponi
-```{r echo=FALSE}
+## grafico del rapporto tra nuovi casi e numero di individui testati 
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = '% casi rispetto individui testati', mirror = 'all', titlefont = f1)
+
+plyTestatiCasi = variazioniGiornaliere %>% filter(variazioniGiornaliere$data >= "2020-04-21") %>%
+  mutate(prop_nuovi_casi = nuovi_casi / nuovi_casi_testati*100) %>% 
+  plot_ly(x = ~data, y = ~prop_nuovi_casi, type = 'scatter', mode = 'lines', showlegend = FALSE, name = 'Prop', color = I("dodgerblue2"), hovertemplate = paste('<b>Prop. positivi su testati</b>: %{y}', '<br><b>Data: </b>: %{x}<br>', '<extra></extra>'), line = list(width = 2)) %>%
+    add_lines(y = ~filterWeek(prop_nuovi_casi), name = "Prop. lisciata", color = I("red3"), line = list(dash = 'dash', width = 2.0), hovertemplate = paste('serie lisciata', '<extra></extra>')) %>%
+  layout(xaxis = axis_x, yaxis = axis_y)
+plyTestatiCasi
+
+```
+
+
+
+
+
+Row
+----------------------------------------
+
+### Nuovi casi rispetto al numero di tamponi
+```{r echo=FALSE, fig.cap="Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot. Per capire come l\'andamento di questa serie sia anche connesso al periodo in cui sono stati effettuati i tamponi si rimanda all'analogo grafico che si trova in questa [pagina](/blog/2020/covid_naz/index.html#tamponi) in cui con i colori sono mostrate anche le date."}
+
 ## nuovi positivi vs tamponi
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Nuovi casi positivi', mirror = 'all', titlefont = f1)
@@ -127,17 +142,12 @@ plyTampCases = plot_ly(data = datiNazionali, x = ~newData, y = ~previsione, type
 plyTampCases
 ```
 
-Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.  
-Per capire come l'andamento di questa serie sia anche connesso al periodo in cui sono stati effettuati i tamponi si rimanda all'analogo grafico che si trova in questa [pagina](/blog/2020/covid_naz/index.html#tamponi) in cui con i colori sono mostrate anche le date.
-
-:::
 
 
+### Nuovi casi rispetto a tamponi (solo su soggetti non testati)
 
-:::{}
 
-#### Nuovi casi rispetto a tamponi (solo su soggetti non testati) 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, fig.cap="Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot."}
 ## nuovi positivi vs tamponi
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi a soggetti distinti', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Positivi', mirror = 'all', titlefont = f1)
@@ -170,63 +180,19 @@ plyTampCases
 
 ```
 
-Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot.
 
-:::
 
-:::{}
 
-#### Andamento nuovi casi e positivi
+Casi e positivi {data-navmenu='Nazionale'}
+===================================== 
 
-```{r echo=FALSE}
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = '', mirror = 'all', tickangle = 45, titlefont = f1)
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1) 
+Row
+----------------------------------------
 
-plyNazNuovi = datiNazionali %>% 
-  mutate(nuovi_positivi_smooth = filterWeek(nuovi_positivi), variazione_totale_positivi_smooth = filterWeek(variazione_totale_positivi)) %>% 
-  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi casi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi casi', color = I("dodgerblue2")) %>% 
-add_lines(x = ~data, y = ~nuovi_positivi_smooth, hovertemplate = paste('<b>Casi smooth</b>','<extra></extra>'), name = "Smooth casi", color = I("dodgerblue2"), line = list(dash = 'dash', width = 1.5)) %>% 
-  add_lines(x = ~data, y = ~variazione_totale_positivi, hovertemplate = paste('<b>Variazione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Var. positivi", color = I("orange")) %>% 
-add_lines(x = ~data, y = ~variazione_totale_positivi_smooth, hovertemplate = paste('<b>Positivi smooth</b>','<extra></extra>'), name = "Smooth positivi", color = I("orange"), line = list(dash = 'dash', width = 1.5)) %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(orientation = 'h')) 
 
-plyNazNuovi
 
-```
-
-I nuovi casi sono quelli osservati in un giorno, mentre la variazione positivi ($\delta_i$) del giorno $i$ è dato da
-
-\[
-\delta_{i} = positivi_{i-1} + nuoviCasi_{i} - guariti_{i} - decessi_{i}.
-\]
-
-:::
-
-:::{}
-#### Nuovi casi rispetto a individui testati
-```{r echo = FALSE, warning = FALSE}
-
-variazioniGiornaliere = datiNazionali %>% transmute(data, nuovi_casi = nuovi_positivi, casi_diagnostici = c(NA, diff(casi_da_sospetto_diagnostico)), casi_screening = c(NA, diff(casi_da_screening)), nuovi_casi_testati = c(NA, diff(casi_testati)), proporzione_diagnostici = casi_diagnostici / nuovi_casi * 100)
-
-## grafico del rapporto tra nuovi casi e numero di individui testati 
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = '% casi rispetto individui testati', mirror = 'all', titlefont = f1)
-
-plyTestatiCasi = variazioniGiornaliere %>% filter(variazioniGiornaliere$data >= "2020-04-21") %>%
-  mutate(prop_nuovi_casi = nuovi_casi / nuovi_casi_testati*100) %>% 
-  plot_ly(x = ~data, y = ~prop_nuovi_casi, type = 'scatter', mode = 'lines', showlegend = FALSE, name = 'Prop', color = I("dodgerblue2"), hovertemplate = paste('<b>Prop. positivi su testati</b>: %{y}', '<br><b>Data: </b>: %{x}<br>', '<extra></extra>'), line = list(width = 2)) %>%
-    add_lines(y = ~filterWeek(prop_nuovi_casi), name = "Prop. lisciata", color = I("red3"), line = list(dash = 'dash', width = 2.0), hovertemplate = paste('serie lisciata', '<extra></extra>')) %>%
-  layout(xaxis = axis_x, yaxis = axis_y)
-plyTestatiCasi
-
-```
-
-Nel grafico è rappresentato la serie storica giornaliera della percentuale di nuovi casi rispetto al numero di individui testati, si noti che il denominatore sono i nuovi individui testati e non i tamponi.
-:::
-
-:::{}
-#### Nuovi casi da attività clinica vs screening
-```{r echo = FALSE, warning= FALSE}
+### Nuovi casi da attività clinica vs screening
+```{r echo = FALSE, warning= FALSE, fig.cap="Nel grafico è rappresentata la decomposizione percentuale dei nuovi casi giornalieri tra positivi da attività clinica (diagnostici) e da attività di screening. Questi dati sono stati messi a disposizione a partire dal 23 luglio 2020."}
 ## grafico con la decomposizione dei nuovi casi giornalieri in tamponi positivi da attività clinica (diagnostici) o da attività di screening 
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = '', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Percentuale', mirror = 'all', titlefont = f1)
@@ -248,12 +214,36 @@ plyDecCasiPerc
 
 ```
 
-Nel grafico è rappresentata la decomposizione percentuale dei nuovi casi giornalieri tra positivi da attività clinica (diagnostici) e da attività di screening. Questi dati sono stati messi a disposizione a partire dal 23 luglio 2020.
-:::
+### Andamento nuovi casi e positivi
 
-:::{}
+```{r echo=FALSE, fig.cap="I nuovi casi sono quelli osservati in un giorno, mentre la variazione positivi, mentre la variazione dei positivi è la variazione dei positivi dovuta ad entrate ed uscite."}
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = '', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1) 
 
-#### Decomposizione positivi totali tra ospedalizzati, intensivi e isolati
+plyNazNuovi = datiNazionali %>% 
+  mutate(nuovi_positivi_smooth = filterWeek(nuovi_positivi), variazione_totale_positivi_smooth = filterWeek(variazione_totale_positivi)) %>% 
+  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi casi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi casi', color = I("dodgerblue2")) %>% 
+add_lines(x = ~data, y = ~nuovi_positivi_smooth, hovertemplate = paste('<b>Casi smooth</b>','<extra></extra>'), name = "Smooth casi", color = I("dodgerblue2"), line = list(dash = 'dash', width = 1.5)) %>% 
+  add_lines(x = ~data, y = ~variazione_totale_positivi, hovertemplate = paste('<b>Variazione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Var. positivi", color = I("orange")) %>% 
+add_lines(x = ~data, y = ~variazione_totale_positivi_smooth, hovertemplate = paste('<b>Positivi smooth</b>','<extra></extra>'), name = "Smooth positivi", color = I("orange"), line = list(dash = 'dash', width = 1.5)) %>% 
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(orientation = 'h')) 
+
+plyNazNuovi
+
+```
+
+
+
+
+
+Ospedalizzati e decessi {data-navmenu='Nazionale'}
+=====================================
+
+Row
+----------------------------------------
+
+### Decomposizione positivi totali tra ospedalizzati, intensivi e isolati
+
 
 ```{r echo=FALSE}
 # ## plot tamponi e positivi  ####
@@ -263,36 +253,32 @@ axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = ''
 plyDecPos = plot_ly(data = datiNazionali, x = ~data) %>%
   add_bars(y = ~ricoverati_con_sintomi, name = "Ricoverati", hovertemplate = paste('<b>Ricoverati</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
   add_bars(y = ~isolamento_domiciliare, name = 'Isolamento', hovertemplate = paste('<b>Isolamento</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
-    add_bars(y = ~terapia_intensiva, name = 'Intensiva', hovertemplate = paste('<b>Intensiva</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>% 
+    add_bars(y = ~terapia_intensiva, name = 'Intensiva', hovertemplate = paste('<b>Intensiva</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>')) %>%
   layout(xaxis = axis_x,  yaxis = axis_y, barmode = 'stack', legend = list(orientation = 'h'))
 
 plyDecPos
 ```
 
-:::
-
-:::{}
 
 
-#### Decessi e guariti
+### Decessi e guariti
 
 ```{r echo=FALSE, warning=FALSE}
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numerosità', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numerosità', mirror = 'all', titlefont = f1)
 
-plyNazDec = datiNazionali %>% 
-  plot_ly(x = ~data, y = ~nuovi_decessi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi decessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi decessi') %>% 
-  add_lines(x = ~data, y = ~nuovi_guariti, hovertemplate = paste('<b>Dimessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Dimessi") %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95)) 
+plyNazDec = datiNazionali %>%
+  plot_ly(x = ~data, y = ~nuovi_decessi, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Nuovi decessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = 'Nuovi decessi') %>%
+  add_lines(x = ~data, y = ~nuovi_guariti, hovertemplate = paste('<b>Dimessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>','<extra></extra>'), name = "Dimessi") %>%
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x, legend = list(x = .05, y = .95))
 
 plyNazDec
 
 ```
-::: 
 
-::::
 
-### Regionale
+<!-- Regionale -->
+
 
 ```{r include=FALSE}
 ### ISTAT shape files ####
@@ -311,103 +297,92 @@ demoRegions$codice_regione = 1:20
 demoRegions = demoRegions[, c(5, 1:4)]
 ```
 
-:::: {style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; grid-auto-flow: row"}
+Positivi e nuovi casi {data-navmenu='Regionale'}
+=====================================
 
+Row
+----------------------------------------
 
-::: {}
-#### Totale positivi
+### Totale positivi
 
 ```{r echo = FALSE}
 ## setting axis
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1) 
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Totale casi', mirror = 'all', titlefont = f1) 
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Totale casi', mirror = 'all', titlefont = f1)
 
-plyRegPosAss= datiRegioni %>% group_by(denominazione_regione) %>% 
-  plot_ly(x = ~data, y = ~totale_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Totale positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
+plyRegPosAss= datiRegioni %>% group_by(denominazione_regione) %>%
+  plot_ly(x = ~data, y = ~totale_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Totale positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x)
+plyRegPosAss
+
+```
+
+### Numero casi giornaliero
+```{r echo = FALSE}
+
+## setting axis
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Totale positivi', mirror = 'all', titlefont = f1)
+
+plyRegPosAss= datiRegioni %>% group_by(denominazione_regione) %>%
+  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Totale positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x)
 plyRegPosAss
 
 ```
 
 
-
-:::
-
-:::{}
-#### Numero casi giornaliero
-```{r echo = FALSE}
-
-## setting axis
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1) 
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Totale positivi', mirror = 'all', titlefont = f1) 
-
-plyRegPosAss= datiRegioni %>% group_by(denominazione_regione) %>% 
-  plot_ly(x = ~data, y = ~nuovi_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Totale positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
-plyRegPosAss
-
-```
-
-
-:::
-
-:::{}
-
-#### Variazione positivi giornaliero
+Row
+----------------------------------------
+### Variazione positivi giornaliero
 ```{r echo = FALSE}
 
 datiRegioniGrouped = datiRegioni %>% group_by(denominazione_regione)
 
 ## setting axis
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Totale casi', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Totale casi', mirror = 'all', titlefont = f1)
 
-plyRegPosAss= datiRegioniGrouped %>% 
-  plot_ly(x = ~data, y = ~variazione_totale_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Variazione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
+plyRegPosAss= datiRegioniGrouped %>%
+  plot_ly(x = ~data, y = ~variazione_totale_positivi, type = 'scatter', mode = 'lines', colors = ~denominazione_regione, hovertemplate = paste('<b>Variazione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x)
 plyRegPosAss
 
 ```
 
 
-:::
-
-::: {}
-
-#### Numero di casi rispetto alla popolazione
+### Numero di casi rispetto alla popolazione
 
 ```{r echo = FALSE}
 datiRegioni = merge(datiRegioni, demoRegions)
 datiRegioni = datiRegioni[order(datiRegioni$data),]
 
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi ogni 1000 abitanti', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi ogni 1000 abitanti', mirror = 'all', titlefont = f1)
 
-plyRegCasi= datiRegioni %>% mutate(casiRelativi = totale_casi / popolazione * 1000) %>% group_by(denominazione_regione) %>% 
-  plot_ly(x = ~data, y = ~casiRelativi, colors = ~denominazione_regione, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Proporzione casi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
+plyRegCasi= datiRegioni %>% mutate(casiRelativi = totale_casi / popolazione * 1000) %>% group_by(denominazione_regione) %>%
+  plot_ly(x = ~data, y = ~casiRelativi, colors = ~denominazione_regione, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Proporzione casi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x)
 plyRegCasi
 
-```  
+```
 
-:::
 
-:::{}
-
-#### Numero di positivi rispetto alla popolazione
+Row
+----------------------------------------
+### Numero di positivi rispetto alla popolazione
 
 ```{r echo = FALSE}
 datiRegioni = merge(datiRegioni, demoRegions)
 datiRegioni = datiRegioni[order(datiRegioni$data),]
 
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di positivi ogni 1000 abitanti', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di positivi ogni 1000 abitanti', mirror = 'all', titlefont = f1)
 
-plyRegCasi= datiRegioni %>% mutate(positiviRelativi = totale_positivi / popolazione * 1000) %>% group_by(denominazione_regione) %>% 
-  plot_ly(x = ~data, y = ~positiviRelativi, colors = ~denominazione_regione, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Proporzione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
+plyRegCasi= datiRegioni %>% mutate(positiviRelativi = totale_positivi / popolazione * 1000) %>% group_by(denominazione_regione) %>%
+  plot_ly(x = ~data, y = ~positiviRelativi, colors = ~denominazione_regione, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Proporzione positivi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x)
 plyRegCasi
 
-```  
+```
 
-:::
 
 <!-- :::{} -->
 
@@ -426,10 +401,14 @@ plyRegCasi
 
 <!-- ::: -->
 
-:::{}
 
 
-#### Decessi giornalieri
+Decessi {data-navmenu='Regionale'}
+========================================
+
+Row
+----------------------------------------
+### Decessi giornalieri
 
 ```{r echo = FALSE, warning=FALSE}
 datiRegioni <- datiRegioni %>%
@@ -447,55 +426,47 @@ plyRegDecessiGiorn
 
 ```
 
-:::
 
-
-
-:::{}
-
-
-#### Decessi rispetto al numero di casi
+### Decessi rispetto al numero di casi
 
 ```{r echo = FALSE, warning=FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi ogni 100 casi', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi ogni 100 casi', mirror = 'all', titlefont = f1)
 
-plyRegDecessi = datiRegioni %>% 
-  mutate(decessiRelativi = deceduti / totale_casi * 100) %>% 
-  group_by(denominazione_regione) %>% 
-  plot_ly(x = ~data, y = ~decessiRelativi, colors = ~denominazione_regione, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Proporzione decessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
-  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x) 
+plyRegDecessi = datiRegioni %>%
+  mutate(decessiRelativi = deceduti / totale_casi * 100) %>%
+  group_by(denominazione_regione) %>%
+  plot_ly(x = ~data, y = ~decessiRelativi, colors = ~denominazione_regione, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Proporzione decessi</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, xaxis = axis_x)
 plyRegDecessi
 ```
 
-:::
+Tamponi {data-navmenu='Regionale'}
+=====================================
 
-
-
-:::{}
-#### Casi testati per regione
+Row
+----------------------------------------
+### Casi testati per regione
 
 ```{r echo= FALSE, warning=FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Individui testati ogni 1000 ab.', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Individui testati ogni 1000 ab.', mirror = 'all', titlefont = f1)
 
-plyRegTamp= datiRegioni %>% mutate(tasso = casi_testati / popolazione * 1000) %>% 
-  group_by(denominazione_regione) %>% 
-  plot_ly(x = ~data, y = ~tasso, colors = ~denominazione_regione, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Ind. testati</b>: %{y:.0f}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>% 
-  layout(xaxis = axis_x, yaxis = axis_y) 
+plyRegTamp= datiRegioni %>% mutate(tasso = casi_testati / popolazione * 1000) %>%
+  group_by(denominazione_regione) %>%
+  plot_ly(x = ~data, y = ~tasso, colors = ~denominazione_regione, type = 'scatter', mode = 'line', hovertemplate = paste('<b>Ind. testati</b>: %{y:.0f}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>%
+  layout(xaxis = axis_x, yaxis = axis_y)
 plyRegTamp
 ```
-:::
 
-:::{}
-#### Nuovi casi da attività clinica vs screening
+### Nuovi casi da attività clinica vs screening
 ```{r echo = FALSE, warning= FALSE}
-## grafico con la decomposizione dei nuovi casi giornalieri in tamponi positivi da attività clinica (diagnostici) o da attività di screening 
+## grafico con la decomposizione dei nuovi casi giornalieri in tamponi positivi da attività clinica (diagnostici) o da attività di screening
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = '', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Percentuale', range = list(0,100), mirror = 'all', titlefont = f1)
 
-plyScreening = datiRegioni %>% 
-  group_by(denominazione_regione) %>% 
-  mutate(delta_screening = c(0, diff(casi_da_screening)) / nuovi_positivi * 100) %>% 
-  filter(data >= "2020-07-23") %>% 
+plyScreening = datiRegioni %>%
+  group_by(denominazione_regione) %>%
+  mutate(delta_screening = c(0, diff(casi_da_screening)) / nuovi_positivi * 100) %>%
+  filter(data >= "2020-07-23") %>%
   plot_ly(x = ~data, y = ~delta_screening, colors = ~denominazione_regione, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Casi da screening</b>: %{y}', '<br><b>Giorno</b>: %{x}<br>'), name = ~denominazione_regione) %>%
   layout(yaxis = axis_y, xaxis = axis_x)
 plyScreening
@@ -504,34 +475,25 @@ plyScreening
 Nel grafico è rappresentata la proporzione di nuovi casi che sono stati individuati con test di screening, il complemento a 100 rappresenta la proporzione di casi da attività clinica. Per capire gli andamenti è meglio considerare poche regioni alla volta.
 
 Per Marche e Calabria è possibile che i dati non siano affidabili, infatti sono rispettivamente uguali a 0 e a 100 ogni giorno (o quasi).
-:::
 
-:::{}
-#### Nuovi casi rispetto ad individui testati
+### Nuovi casi rispetto ad individui testati
 ```{r echo = FALSE, warning = FALSE}
 
-## grafico del rapporto tra nuovi casi e numero di individui testati 
+## grafico del rapporto tra nuovi casi e numero di individui testati
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, range = list(0, 40), showline = T, title = '% casi rispetto individui testati', mirror = 'all', titlefont = f1)
 
-plyTestatiCasiReg = datiRegioniGrouped %>% 
-  filter(data >= "2020-04-28") %>% 
-  mutate(nuovi_casi_testati = c(0, diff(casi_testati))) %>% 
+plyTestatiCasiReg = datiRegioniGrouped %>%
+  filter(data >= "2020-04-28") %>%
+  mutate(nuovi_casi_testati = c(0, diff(casi_testati))) %>%
   plot_ly(x = ~data, y = ~nuovi_positivi / nuovi_casi_testati*100, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Prop. positivi su testati</b>: %{y}', '<br><b>Data: </b>: %{x}<br>'), line = list(width = 1.2), name = ~denominazione_regione) %>%
   layout(xaxis = axis_x, yaxis = axis_y)
 plyTestatiCasiReg
 
 ```
 
-:::
+<!-- ### Situazione internazionale -->
 
-
-
-
-
-::::
-
-### Situazione internazionale
 
 ```{r echo=FALSE, include=FALSE, warning = FALSE}
 ### load packages ####
@@ -566,10 +528,10 @@ europeCodes = nationalCode %>% filter(Continent_Code == 'EU')
 worldMap = st_read(paste0(prefixDir,'/world_shape/CNTR_RG_60M_2016_4326.shp/CNTR_RG_60M_2016_4326.shp'))
 
 
-## this dataset is from 
+## this dataset is from
 ## https://hub.arcgis.com/datasets/6996f03a1b364dbab4008d99380370ed_0
 worldCities = st_read(paste0(prefixDir, '/world_shape/World_Cities/World_Cities.shp'))
-worldCapital = worldCities %>% filter(STATUS %in% c('National capital','National and provincial capital', 'National capital and provincial capital enclave')) %>% 
+worldCapital = worldCities %>% filter(STATUS %in% c('National capital','National and provincial capital', 'National capital and provincial capital enclave')) %>%
           mutate(countryterritoryCode = strtrim(GMI_ADMIN, 3))
 worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == 'Montenegro'] = 'MNE'
 worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == 'Romania'] = 'ROU'
@@ -577,14 +539,14 @@ worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == 'Guernsey'] = 'GGY'
 worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == "Isle of Man"] = 'IMN'
 worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == "Jersey"] = 'JEY'
 
-worldCapital = cbind(worldCapital, st_coordinates(worldCapital))              
+worldCapital = cbind(worldCapital, st_coordinates(worldCapital))
 
-## these shapefiles are downloaded from 
+## these shapefiles are downloaded from
 ## https://www.naturalearthdata.com/downloads/
 ## these are the same of package map
-## the following includes sovereign 
+## the following includes sovereign
 # worldStates = st_read('static/dati_protezione_civile/world_shape/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp')
-## the following does NOT include sovereign 
+## the following does NOT include sovereign
 worldStates = st_read(paste0(prefixDir, '/world_shape/ne_10m_admin_0_map_units/ne_10m_admin_0_map_units.shp'))
 
 worldCountries = worldStates %>% filter(TYPE == 'Country')
@@ -600,7 +562,7 @@ europeStates = worldStates %>% filter(CONTINENT == "Europe")
 ### EUROPEAN CENTRE FOR DISEASE PREVENTION AND CONTROL DATA ####
 ################################################################
 ## see https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
-## 
+##
 # read the Dataset sheet into “R”. The dataset will be called "data".
 dataOrig <- read_csv("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", na = "")
 
@@ -611,8 +573,8 @@ dataOrig = dataOrig %>% mutate(dateRep = as.Date(dateRep, format = '%d/%m/%Y'), 
 data = dataOrig %>%  group_by(geoId) %>% arrange(countriesAndTerritories, dateRep) %>% mutate(cumCases = cumsum(cases), cumDeaths = cumsum(deaths))
 
 ## elimina entrate "Cases_on_an_international_conveyance_Japan"
-data = data %>% filter(countriesAndTerritories != "Cases_on_an_international_conveyance_Japan") %>% 
-  mutate(countriesAndTerritories = gsub('_', ' ', countriesAndTerritories)) %>% 
+data = data %>% filter(countriesAndTerritories != "Cases_on_an_international_conveyance_Japan") %>%
+  mutate(countriesAndTerritories = gsub('_', ' ', countriesAndTerritories)) %>%
   mutate(countriesAndTerritories = gsub('United States of America', 'USA', countriesAndTerritories))
 
 
@@ -623,8 +585,8 @@ data = data %>% filter(countriesAndTerritories != "Cases_on_an_international_con
 ############################################################
 
 
-# dataEurope = data %>% filter(geoId %in% europeCodes$Two_Letter_Country_Code) 
-dataEurope = data %>% filter(countryterritoryCode%in% europeCodes$Three_Letter_Country_Code) 
+# dataEurope = data %>% filter(geoId %in% europeCodes$Two_Letter_Country_Code)
+dataEurope = data %>% filter(countryterritoryCode%in% europeCodes$Three_Letter_Country_Code)
 
 ### formatting plots ####
 f1 <- list(family = "Arial, sans-serif",
@@ -636,18 +598,17 @@ f2 <- list( family = "Old Standard TT, serif",
 
 
 ## setting axis
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)   
-
-## set figure dimension of r chunk
-# knitr::opts_chunk$set(fig.width=8)  
-# knitr::opts_chunk$set(fig.width=8, fig.height=5.1)  
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
 
 ```
 
-:::: {style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; grid-auto-flow: row"}
 
-::: {}
-#### Paesi maggiormente colpiti (Casi totali)
+Casi {data-navmenu='Internazionale' }
+=====================================
+
+Row
+----------------------------------------
+### Paesi maggiormente colpiti (Casi totali)
 ```{r echo=FALSE, warning=FALSE}
 data = data %>%  mutate(cumCasesRate = cumCases / popData2019 * 1000)
 
@@ -656,133 +617,129 @@ temp = head(temp$country[order(temp$x, decreasing = TRUE)], 15)
 
 temp = data[data$countriesAndTerritories %in% temp,]
 
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1)
 
 
-plyCases = temp %>% 
-  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>% 
-  plot_ly(x = ~dateRep, y = ~cumCases, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>% 
+plyCases = temp %>%
+  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cumCases, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di casi', legend = list(x = .05, y = .95))
 
 plyCases
 ```
 In questo grafico è rappresentato l'andamento del numero totale di casi per 15 paesi che hanno avuto il maggior numero di casi in termini assoluti.
-:::
 
 
-::: {}
-#### Paesi maggiormente colpiti (Casi per abitante)
+### Paesi maggiormente colpiti (Casi per abitante)
 ```{r echo=FALSE, warning=FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi per 1000 abitanti', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi per 1000 abitanti', mirror = 'all', titlefont = f1)
 
 
-plyCasesRate = temp %>% 
-  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>% 
-  plot_ly(x = ~dateRep, y = ~cumCasesRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>% 
+plyCasesRate = temp %>%
+  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cumCasesRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Proporzione di casi rispetto alla popolazione', legend = list(x = .05, y = .95))
 
 plyCasesRate
 ```
 Numero di casi per 1000 abitanti nei paesi con il maggior numero assoluto di ammalati.
-:::
 
-::: {}
-#### Paesi maggiormente colpiti sulla base del numero di casi per 1000 abitanti
+
+Row
+----------------------------------------
+### Paesi maggiormente colpiti sulla base del numero di casi per 1000 abitanti
 ```{r echo=FALSE, warning=FALSE}
 tempProp = aggregate(data$cumCasesRate, by = list(country = data$countriesAndTerritories), max)
 tempProp = head(tempProp$country[order(tempProp$x, decreasing = TRUE)], 15)
 
 tempProp = data[data$countriesAndTerritories %in% tempProp,]
 
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, mirror = 'all', titlefont = f1)
 
 
-plyCasesRate = tempProp %>% 
-  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>% 
-  plot_ly(x = ~dateRep, y = ~cumCasesRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>% 
+plyCasesRate = tempProp %>%
+  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cumCasesRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Proporzione di casi rispetto alla popolazione', legend = list(x = .05, y = .95))
 
 plyCasesRate
 ```
 Numero di casi per 1000 abitanti nei paesi con il maggior numero di ammalati ogni 1000 abitanti, in questo caso c'è una preponderanza di paesi piccoli.
 
-:::
-
-::: {}
-#### Numero di nuovi casi giornaliero
+### Numero di nuovi casi giornaliero
 ```{r echo = FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1)
 
 
-plyCases = temp %>% 
-  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>% 
-  plot_ly(x = ~dateRep, y = ~cases, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>% 
+plyCases = temp %>%
+  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cases, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di casi', legend = list(x = .05, y = .95))
 
 plyCases
 ```
-:::
 
+Decessi {data-navmenu='Internazionale' }
+==================================================
 
-
-::: {}
-#### Numero di decessi rispetto alla popolazione
+Row
+----------------------------------------
+### Numero di decessi rispetto alla popolazione
 ```{r echo= FALSE}
 ## proporzione di nuovi decessi rispetto alla popolazione ####
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di nuovi decessi per 100000 abitanti', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di nuovi decessi per 100000 abitanti', mirror = 'all', titlefont = f1)
 
-plyNewDeathsRate = temp %>%  mutate(newDeathsRate = deaths / popData2019 * 100000) %>% 
-  filter(dateRep >= "2020-02-20", popData2019 >= 1.e7) %>% group_by(geoId) %>% 
-  plot_ly(x = ~dateRep, y = ~newDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>% 
+plyNewDeathsRate = temp %>%  mutate(newDeathsRate = deaths / popData2019 * 100000) %>%
+  filter(dateRep >= "2020-02-20", popData2019 >= 1.e7) %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~newDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>%
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di decessi quotidiani per 100000 abitanti', legend = list(x = .05, y = .95))
 
 plyNewDeathsRate
 
 ```
 
-:::
-
-::: {}
-
-#### Numero di decessi rispetto al numero di casi
+### Numero di decessi rispetto al numero di casi
 ```{r echo=FALSE, warning=FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi su numero di casi', mirror = 'all', titlefont = f1) 
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi su numero di casi', mirror = 'all', titlefont = f1)
 
-plyDeathsCasesRate = temp %>%  mutate(cumDeathsRate = cumDeaths / cumCases * 100) %>% 
-  filter(dateRep >= "2020-03-02", popData2019 >= 1.e7) %>% group_by(geoId) %>% 
-  plot_ly(x = ~dateRep, y = ~cumDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>% 
+plyDeathsCasesRate = temp %>%  mutate(cumDeathsRate = cumDeaths / cumCases * 100) %>%
+  filter(dateRep >= "2020-03-02", popData2019 >= 1.e7) %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cumDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>%
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di decessi ogni 100 casi', legend = list(x = .05, y = .95))
 
 plyDeathsCasesRate
 
 ```
-:::
 
-:::{}
-#### Diffusione in Europa per numero di decessi
+Mappe {data-navmenu='Internazionale' }
+=========================================
+
+Row
+----------------------------------------
+### Diffusione in Europa per numero di decessi
 
 ```{r map-deaths, echo=FALSE, warning=FALSE}
 dataEuropeShp = ungroup(dataEurope %>% filter(dateRep == max(dateRep)))
-dataEuropeShp = merge(dataEuropeShp, worldCapital) 
-tempVars = c("countryterritoryCode", "dateRep","cases","deaths", "popData2019","continentExp","cumCases","cumDeaths","CITY_NAME","CNTRY_NAME","X","Y") 
+dataEuropeShp = merge(dataEuropeShp, worldCapital)
+tempVars = c("countryterritoryCode", "dateRep","cases","deaths", "popData2019","continentExp","cumCases","cumDeaths","CITY_NAME","CNTRY_NAME","X","Y")
 dataEuropeShp = dataEuropeShp[, tempVars]
 
 # dataEuropeShp = dataEuropeShp[, c(1, 2, 6, 7, 10, 11, 12, 13, 16, 20, 27, 28)]
 
-## add rate of cases 
-dataEuropeShp = dataEuropeShp %>% 
+## add rate of cases
+dataEuropeShp = dataEuropeShp %>%
   mutate(cumCasesRate = cumCases/popData2019*1.e4, newCasesRate = cases /popData2019 * 1.e4, cumDeathsRate = cumDeaths/popData2019 *1.e5, newDeathsRate = deaths /popData2019 * 1.e5)
 
 dataEuropeShp = dataEuropeShp %>% filter(CNTRY_NAME != 'San Marino')
 
 europeDeathMap = dataEuropeShp %>% plot_mapbox(height = 600) %>%
-  add_markers(x = ~X, y = ~Y, type = 'scatter', mode = 'markers', 
+  add_markers(x = ~X, y = ~Y, type = 'scatter', mode = 'markers',
               marker = list(color = 'red',
                             # size = ~your_list_of_size_values,
                             size = ~cumDeathsRate,
-                            opacity = 0.5, 
-                            sizemode = 'area', 
-                            sizeref = .03), 
+                            opacity = 0.5,
+                            sizemode = 'area',
+                            sizeref = .03),
               text = paste('Decessi:', round(dataEuropeShp$cumDeathsRate, 2), '\nStato:', dataEuropeShp$CNTRY_NAME),
               hoverinfo = 'text')  %>%
   layout(mapbox = list(
@@ -796,19 +753,16 @@ europeDeathMap
 
 ```
 
-:::
-
-:::{}
-#### Diffusione in Europa per numero di casi
+### Diffusione in Europa per numero di casi
 ```{r echo = FALSE}
 europeCasesMap = dataEuropeShp %>% plot_mapbox(height = 600) %>%
-  add_markers(x = ~X, y = ~Y, type = 'scatter', mode = 'markers', 
+  add_markers(x = ~X, y = ~Y, type = 'scatter', mode = 'markers',
               marker = list(color = 'darkgreen',
                             # size = ~your_list_of_size_values,
                             size = ~cumCasesRate,
-                            opacity = 0.5, 
-                            sizemode = 'area', 
-                            sizeref = .03), 
+                            opacity = 0.5,
+                            sizemode = 'area',
+                            sizeref = .03),
               text = paste('Casi:', round(dataEuropeShp$cumCasesRate, 2), '\nStato:', dataEuropeShp$CNTRY_NAME),
               hoverinfo = 'text')  %>%
   layout(mapbox = list(
@@ -819,8 +773,3 @@ europeCasesMap = dataEuropeShp %>% plot_mapbox(height = 600) %>%
 
 europeCasesMap
 ```
-:::
-
-
-
-::::
