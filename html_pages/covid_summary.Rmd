@@ -573,7 +573,7 @@ axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'D
 ```
 
 
-Internazionale 
+Internazionale
 =====================================
 
 Row
@@ -750,3 +750,4 @@ europeCasesMap = dataEuropeShp %>% plot_mapbox(height = 600) %>%
 
 europeCasesMap
 ```
+
