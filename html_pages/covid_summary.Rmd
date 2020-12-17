@@ -542,7 +542,10 @@ europeStates = worldStates %>% filter(CONTINENT == "Europe")
 ## see https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
 ##
 # read the Dataset sheet into “R”. The dataset will be called "data".
-dataOrig <- read_csv("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", na = "")
+#dataOrig <- read_csv("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", na = "")
+
+load('../../dati_protezione_civile/dati_ECDPC/world_data_2020-12-15')
+dataOrig = data
 
 # modifiche di formato ad alcune variabili
 dataOrig = dataOrig %>% mutate(dateRep = as.Date(dateRep, format = '%d/%m/%Y'), geoId = factor(geoId))
