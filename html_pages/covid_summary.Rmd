@@ -18,18 +18,11 @@ require(flexdashboard)
 
 prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dati_protezione_civile'
 
-temp = tail(sort(dir(paste(prefixDir,'/data', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
-oggi = gsub('_', '-', substr(temp, nchar(temp)-15, nchar(temp)-6))
-
-# if (as.Date(oggi)<Sys.Date()){
-# source(paste0(prefixDir,'/importazione_dati.R'))
-# temp = tail(sort(dir(paste(prefixDir,'/data/', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
-# }
-
-
+temp = tail(sort(dir(paste(prefixDir,'/data', sep = ''), 'Rdata', full.names = TRUE)),1) ## file 
 load(temp)
-italyShpRegions <- st_read(paste(prefixDir,'/italy_shape/regioni/Reg01012020_g_WGS84.shp', sep = ''))
-# 
+oggi = max(datiNazionali$data)
+
+load(paste0(prefixDir,'/shapefile_Rformat/region_shape_file.Rdata')) 
 
 ## functions definitions ####
 filterWeek <- function(x){
@@ -258,20 +251,11 @@ plyDecCasiPerc
 
 
 ```{r include=FALSE}
-### ISTAT shape files ####
-italyShpRegions <- st_read(paste(prefixDir,'/italy_shape/regioni/Reg01012020_g_WGS84.shp', sep = ''))
-italyShpCounties <- st_read(paste(prefixDir,'/italy_shape/province/ProvCM01012020_g_WGS84.shp', sep = ''))
+### load ISTAT shape files ####
+load(paste0(prefixDir,'/shapefile_Rformat/counties_shape_file.Rdata')) 
+load(paste0(prefixDir,'/demo_data/regioni.Rdata')) 
+### load ISTAT demographic data ####
 
-
-
-### ISTAT demographic data ####
-demoRegions = read.csv(file = paste(prefixDir, '/demo_data/regioni.csv', sep = ''), skip = 1)
-
-demoRegions = demoRegions[demoRegions$Età == 'Totale', c('Regione', 'Totale.Maschi', 'Totale.Femmine')]
-rownames(demoRegions) = NULL
-demoRegions$popolazione = rowSums(demoRegions[,2:3])
-demoRegions$codice_regione = 1:20
-demoRegions = demoRegions[, c(5, 1:4)]
 ```
 
 Regionale 
@@ -485,65 +469,10 @@ Sys.setenv('MAPBOX_TOKEN' = 'pk.eyJ1IjoiYW5kcmVhLW0iLCJhIjoiY2s4b20zcGFpMDh5cDNl
 
 prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dati_protezione_civile'
 
-########################################
-##   Importazione sigle internaz.   ####
-##   e suddivisione in continenti   ####
-##    INTERNATIONAL STATES CODES    ####
-########################################
+## import world shapefile 
+load('../../dati_protezione_civile/shapefile_Rformat/all_shapefiles.Rdata')
 
-nationalCode = read_csv(paste0(prefixDir,'/world_shape/country-and-continent-codes-list-csv_csv.csv'))
-
-
-
-nationalCode = nationalCode %>% arrange(Continent_Code)
-europeCodes = nationalCode %>% filter(Continent_Code == 'EU')
-
-
-#######################################################
-###         Importazione shapefile mondiali         ###
-#######################################################
-
-worldMap = st_read(paste0(prefixDir,'/world_shape/CNTR_RG_60M_2016_4326.shp/CNTR_RG_60M_2016_4326.shp'))
-
-
-## this dataset is from
-## https://hub.arcgis.com/datasets/6996f03a1b364dbab4008d99380370ed_0
-worldCities = st_read(paste0(prefixDir, '/world_shape/World_Cities/World_Cities.shp'))
-worldCapital = worldCities %>% filter(STATUS %in% c('National capital','National and provincial capital', 'National capital and provincial capital enclave')) %>%
-          mutate(countryterritoryCode = strtrim(GMI_ADMIN, 3))
-worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == 'Montenegro'] = 'MNE'
-worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == 'Romania'] = 'ROU'
-worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == 'Guernsey'] = 'GGY'
-worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == "Isle of Man"] = 'IMN'
-worldCapital$countryterritoryCode[worldCapital$CNTRY_NAME == "Jersey"] = 'JEY'
-
-worldCapital = cbind(worldCapital, st_coordinates(worldCapital))
-
-## these shapefiles are downloaded from
-## https://www.naturalearthdata.com/downloads/
-## these are the same of package map
-## the following includes sovereign
-# worldStates = st_read('static/dati_protezione_civile/world_shape/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp')
-## the following does NOT include sovereign
-worldStates = st_read(paste0(prefixDir, '/world_shape/ne_10m_admin_0_map_units/ne_10m_admin_0_map_units.shp'))
-
-worldCountries = worldStates %>% filter(TYPE == 'Country')
-europeStates = worldStates %>% filter(CONTINENT == "Europe")
-
-
-#####################################################
-####   import datasets from different sources    ####
-#####################################################
-
-
-################################################################
-### EUROPEAN CENTRE FOR DISEASE PREVENTION AND CONTROL DATA ####
-################################################################
-## see https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
-##
-# read the Dataset sheet into “R”. The dataset will be called "data".
-#dataOrig <- read_csv("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", na = "")
-
+## LOAD ECDC DATA ----
 load('../../dati_protezione_civile/dati_ECDPC/world_data_2020-12-15')
 dataOrig = data
 
