@@ -473,19 +473,20 @@ prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dat
 load('../../dati_protezione_civile/shapefile_Rformat/all_shapefiles.Rdata')
 
 ## LOAD ECDC DATA ----
-load('../../dati_protezione_civile/dati_ECDPC/world_data_2020-12-15')
+# load('../../dati_protezione_civile/dati_ECDPC/world_data_2020-12-15')
+load(file = tail(dir(paste0(prefixDir,"/world_data/"), full.names = TRUE),1))
 dataOrig = data
 
 # modifiche di formato ad alcune variabili
-dataOrig = dataOrig %>% mutate(dateRep = as.Date(dateRep, format = '%d/%m/%Y'), geoId = factor(geoId))
+# dataOrig = dataOrig %>% mutate(dateRep = as.Date(dateRep, format = '%d/%m/%Y'), geoId = factor(geoId))
 
-## aggiunge somme di casi cumulate per paese
-data = dataOrig %>%  group_by(geoId) %>% arrange(countriesAndTerritories, dateRep) %>% mutate(cumCases = cumsum(cases), cumDeaths = cumsum(deaths))
+# ## aggiunge somme di casi cumulate per paese
+# data = dataOrig %>%  group_by(geoId) %>% arrange(countriesAndTerritories, dateRep) %>% mutate(cumCases = cumsum(cases_weekly), cumDeaths = cumsum(deaths_weekly))
 
 ## elimina entrate "Cases_on_an_international_conveyance_Japan"
-data = data %>% filter(countriesAndTerritories != "Cases_on_an_international_conveyance_Japan") %>%
-  mutate(countriesAndTerritories = gsub('_', ' ', countriesAndTerritories)) %>%
-  mutate(countriesAndTerritories = gsub('United States of America', 'USA', countriesAndTerritories))
+# data = data %>% filter(countriesAndTerritories != "Cases_on_an_international_conveyance_Japan") %>%
+#   mutate(countriesAndTerritories = gsub('_', ' ', countriesAndTerritories)) %>%
+#   mutate(countriesAndTerritories = gsub('United States of America', 'USA', countriesAndTerritories))
 
 
 
@@ -581,7 +582,7 @@ axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'N
 
 plyCases = temp %>%
   filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
-  plot_ly(x = ~dateRep, y = ~cases, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
+  plot_ly(x = ~dateRep, y = ~cases_weekly, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di casi', legend = list(x = .05, y = .95))
 
 plyCases
@@ -597,7 +598,7 @@ Row
 ## proporzione di nuovi decessi rispetto alla popolazione ####
 axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di nuovi decessi per 100000 abitanti', mirror = 'all', titlefont = f1)
 
-plyNewDeathsRate = temp %>%  mutate(newDeathsRate = deaths / popData2019 * 100000) %>%
+plyNewDeathsRate = temp %>%  mutate(newDeathsRate = deaths_weekly / popData2019 * 100000) %>%
   filter(dateRep >= "2020-02-20", popData2019 >= 1.e7) %>% group_by(geoId) %>%
   plot_ly(x = ~dateRep, y = ~newDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>%
   layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di decessi quotidiani per 100000 abitanti', legend = list(x = .05, y = .95))
@@ -632,12 +633,12 @@ Row
 ```{r map-deaths, echo=FALSE, warning=FALSE}
 dataEuropeShp = ungroup(dataEurope %>% filter(dateRep == max(dateRep)))
 dataEuropeShp = merge(dataEuropeShp, worldCapital)
-tempVars = c("countryterritoryCode", "dateRep","cases","deaths", "popData2019","continentExp","cumCases","cumDeaths","CITY_NAME","CNTRY_NAME","X","Y")
+tempVars = c("countryterritoryCode", "dateRep","cases_weekly","deaths_weekly", "popData2019","continentExp","cumCases","cumDeaths","CITY_NAME","CNTRY_NAME","X","Y") 
 dataEuropeShp = dataEuropeShp[, tempVars]
 
 ## add rate of cases
 dataEuropeShp = dataEuropeShp %>%
-  mutate(cumCasesRate = cumCases/popData2019*1.e4, newCasesRate = cases /popData2019 * 1.e4, cumDeathsRate = cumDeaths/popData2019 *1.e5, newDeathsRate = deaths /popData2019 * 1.e5)
+  mutate(cumCasesRate = cumCases/popData2019*1.e4, newCasesRate = cases_weekly /popData2019 * 1.e4, cumDeathsRate = cumDeaths/popData2019 *1.e5, newDeathsRate = deaths_weekly /popData2019 * 1.e5)
 
 dataEuropeShp = dataEuropeShp %>% filter(CNTRY_NAME != 'San Marino')
 
