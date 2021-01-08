@@ -18,11 +18,18 @@ require(flexdashboard)
 
 prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dati_protezione_civile'
 
-temp = tail(sort(dir(paste(prefixDir,'/data', sep = ''), 'Rdata', full.names = TRUE)),1) ## file 
-load(temp)
-oggi = max(datiNazionali$data)
+temp = tail(sort(dir(paste(prefixDir,'/data', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
+oggi = gsub('_', '-', substr(temp, nchar(temp)-15, nchar(temp)-6))
 
-load(paste0(prefixDir,'/shapefile_Rformat/region_shape_file.Rdata')) 
+# if (as.Date(oggi)<Sys.Date()){
+# source(paste0(prefixDir,'/importazione_dati.R'))
+# temp = tail(sort(dir(paste(prefixDir,'/data/', sep = ''), 'Rdata', full.names = TRUE)),1) ## file da caricare
+# }
+
+
+load(temp)
+italyShpRegions <- st_read(paste(prefixDir,'/italy_shape/regioni/Reg01012020_g_WGS84.shp', sep = ''))
+# 
 
 ## functions definitions ####
 filterWeek <- function(x){
@@ -251,12 +258,255 @@ plyDecCasiPerc
 
 
 ```{r include=FALSE}
-### load ISTAT shape files ####
-load(paste0(prefixDir,'/shapefile_Rformat/counties_shape_file.Rdata')) 
-load(paste0(prefixDir,'/demo_data/regioni.Rdata')) 
-### load ISTAT demographic data ####
+### ISTAT shape files ####
+italyShpRegions <- st_read(paste(prefixDir,'/italy_shape/regioni/Reg01012020_g_WGS84.shp', sep = ''))
+italyShpCounties <- st_read(paste(prefixDir,'/italy_shape/province/ProvCM01012020_g_WGS84.shp', sep = ''))
+
+
+
+### ISTAT demographic data ####
+demoRegions = read.csv(file = paste(prefixDir, '/demo_data/regioni.csv', sep = ''), skip = 1)
+
+demoRegions = demoRegions[demoRegions$Età == 'Totale', c('Regione', 'Totale.Maschi', 'Totale.Femmine')]
+rownames(demoRegions) = NULL
+demoRegions$popolazione = rowSums(demoRegions[,2:3])
+demoRegions$codice_regione = 1:20
+demoRegions = demoRegions[, c(5, 1:4)]
+```
+
+Internazionale
+=====================================
+
+```{r echo=FALSE, include=FALSE, warning = FALSE}
+### load packages ####
+library(plotly)
+library(sf)
+library(DT)
+library(tidyverse)
+
+Sys.setenv('MAPBOX_TOKEN' = 'pk.eyJ1IjoiYW5kcmVhLW0iLCJhIjoiY2s4b20zcGFpMDh5cDNldDJ4YTYwNmFlMiJ9.TReLfeIr7ZVEMYMJg2w0-g')
+
+
+prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dati_protezione_civile'
+
+########################################
+##   Importazione sigle internaz.   ####
+##   e suddivisione in continenti   ####
+##    INTERNATIONAL STATES CODES    ####
+########################################
+
+load(paste0(prefixDir,'/shapefile_Rformat/all_shapefiles.Rdata'))
+
+load(paste0(prefixDir,"/world_data/", tail(dir(paste0(prefixDir,"/world_data/")),1)))
+
+dataOrig = data
+
+# modifiche di formato ad alcune variabili
+dataOrig = dataOrig %>% mutate(dateRep = as.Date(dateRep, format = '%d/%m/%Y'), geoId = factor(geoId))
+
+## aggiunge somme di casi cumulate per paese
+data = dataOrig %>%  group_by(geoId) %>% arrange(countriesAndTerritories, dateRep) %>% mutate(cumCases = cumsum(cases_weekly), cumDeaths = cumsum(deaths_weekly))
+
+## elimina entrate "Cases_on_an_international_conveyance_Japan"
+data = data %>% filter(countriesAndTerritories != "Cases_on_an_international_conveyance_Japan") %>%
+  mutate(countriesAndTerritories = gsub('_', ' ', countriesAndTerritories)) %>%
+  mutate(countriesAndTerritories = gsub('United States of America', 'USA', countriesAndTerritories))
+
+####  Europe data  ####
+dataEurope = data %>% filter(countryterritoryCode%in% europeCodes$Three_Letter_Country_Code)
+
+
+## setting axis
+f1 <- list(family = "Arial, sans-serif",
+           size = 18,
+           color = "lightgrey" )
+f2 <- list( family = "Old Standard TT, serif",
+            size = 14,
+            color = "black" )
+
+
+axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
 
 ```
+
+
+
+Row
+----------------------------------------
+### Paesi maggiormente colpiti (Casi totali)
+
+In questo grafico è rappresentato l’andamento del numero totale di casi per 15 paesi che hanno avuto il maggior numero di casi in termini assoluti.
+
+```{r echo=FALSE, warning=FALSE}
+data = data %>%  mutate(cumCasesRate = cumCases / popData2019 * 1000)
+
+temp = aggregate(data$cumCases, by = list(country = data$countriesAndTerritories), max)
+temp = head(temp$country[order(temp$x, decreasing = TRUE)], 15)
+
+temp = data[data$countriesAndTerritories %in% temp,]
+
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1)
+
+
+plyCases = temp %>%
+  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cumCases, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di casi', legend = list(x = .05, y = .95))
+
+plyCases
+```
+
+
+### Paesi maggiormente colpiti (Casi per abitante)
+
+Numero di casi per 1000 abitanti nei paesi con il maggior numero assoluto di ammalati.
+
+```{r echo=FALSE, warning=FALSE}
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi per 1000 abitanti', mirror = 'all', titlefont = f1)
+
+
+plyCasesRate = temp %>%
+  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cumCasesRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, title = 'Proporzione di casi rispetto alla popolazione', legend = list(x = .05, y = .95))
+
+plyCasesRate
+```
+
+
+Row
+----------------------------------------
+### Paesi maggiormente colpiti sulla base del numero di casi per 1000 abitanti
+
+Numero di casi per 1000 abitanti nei paesi con il maggior numero di ammalati ogni 1000 abitanti, in questo caso c'è una preponderanza di paesi piccoli.
+
+```{r echo=FALSE, warning=FALSE}
+tempProp = aggregate(data$cumCasesRate, by = list(country = data$countriesAndTerritories), max)
+tempProp = head(tempProp$country[order(tempProp$x, decreasing = TRUE)], 15)
+
+tempProp = data[data$countriesAndTerritories %in% tempProp,]
+
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, mirror = 'all', titlefont = f1)
+
+
+plyCasesRate = tempProp %>%
+  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cumCasesRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, title = 'Proporzione di casi rispetto alla popolazione', legend = list(x = .05, y = .95))
+
+plyCasesRate
+```
+
+### Numero di nuovi casi giornaliero
+```{r echo = FALSE}
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1)
+
+
+plyCases = temp %>%
+  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cases_weekly, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di casi', legend = list(x = .05, y = .95))
+
+plyCases
+```
+
+<!-- Decessi {data-navmenu='Internazionale' } -->
+<!-- ================================================== -->
+
+Row
+----------------------------------------
+### Numero di decessi rispetto alla popolazione
+```{r echo= FALSE}
+## proporzione di nuovi decessi rispetto alla popolazione ####
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di nuovi decessi per 100000 abitanti', mirror = 'all', titlefont = f1)
+
+plyNewDeathsRate = temp %>%  mutate(newDeathsRate = deaths_weekly / popData2019 * 100000) %>%
+  filter(dateRep >= "2020-02-20", popData2019 >= 1.e7) %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~newDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di decessi quotidiani per 100000 abitanti', legend = list(x = .05, y = .95))
+
+plyNewDeathsRate
+
+```
+
+Row
+----------------------------------------
+
+### Numero di decessi rispetto al numero di casi
+```{r echo=FALSE, warning=FALSE}
+axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi su numero di casi', mirror = 'all', titlefont = f1)
+
+plyDeathsCasesRate = temp %>%  mutate(cumDeathsRate = cumDeaths / cumCases * 100) %>%
+  filter(dateRep >= "2020-03-02", popData2019 >= 1.e7) %>% group_by(geoId) %>%
+  plot_ly(x = ~dateRep, y = ~cumDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>%
+  layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di decessi ogni 100 casi', legend = list(x = .05, y = .95))
+
+plyDeathsCasesRate
+
+```
+
+<!-- Mappe {data-navmenu='Internazionale' } -->
+<!-- ========================================= -->
+
+Row
+----------------------------------------
+### Diffusione in Europa per numero di decessi
+
+```{r map-deaths, echo=FALSE, warning=FALSE}
+dataEuropeShp = ungroup(dataEurope %>% filter(dateRep == max(dateRep)))
+dataEuropeShp = merge(dataEuropeShp, worldCapital)
+tempVars = c("countryterritoryCode", "dateRep","cases_weekly","deaths_weekly", "popData2019","continentExp","cumCases","cumDeaths","CITY_NAME","CNTRY_NAME","X","Y") 
+dataEuropeShp = dataEuropeShp[, tempVars]
+
+## add rate of cases
+dataEuropeShp = dataEuropeShp %>%
+  mutate(cumCasesRate = cumCases/popData2019*1.e4, newCasesRate = cases_weekly /popData2019 * 1.e4, cumDeathsRate = cumDeaths/popData2019 *1.e5, newDeathsRate = deaths_weekly /popData2019 * 1.e5)
+
+dataEuropeShp = dataEuropeShp %>% filter(CNTRY_NAME != 'San Marino')
+
+europeDeathMap = dataEuropeShp %>% plot_mapbox(height = 600) %>%
+  add_markers(x = ~X, y = ~Y, type = 'scatter', mode = 'markers',
+              marker = list(color = 'red',
+                            # size = ~your_list_of_size_values,
+                            size = ~cumDeathsRate,
+                            opacity = 0.5,
+                            sizemode = 'area',
+                            sizeref = .03),
+              text = paste('Decessi:', round(dataEuropeShp$cumDeathsRate, 2), '\nStato:', dataEuropeShp$CNTRY_NAME),
+              hoverinfo = 'text')  %>%
+  layout(mapbox = list(
+    center = list(lon = 7.75, lat = 53.58),
+    zoom = 3.0),
+    showlegend = FALSE,
+    title = 'Numero di decessi ogni 100000 abitanti')
+
+europeDeathMap
+
+
+```
+
+### Diffusione in Europa per numero di casi
+```{r echo = FALSE}
+europeCasesMap = dataEuropeShp %>% plot_mapbox(height = 600) %>%
+  add_markers(x = ~X, y = ~Y, type = 'scatter', mode = 'markers',
+              marker = list(color = 'darkgreen',
+                            # size = ~your_list_of_size_values,
+                            size = ~cumCasesRate,
+                            opacity = 0.5,
+                            sizemode = 'area',
+                            sizeref = .03),
+              text = paste('Casi:', round(dataEuropeShp$cumCasesRate, 2), '\nStato:', dataEuropeShp$CNTRY_NAME),
+              hoverinfo = 'text')  %>%
+  layout(mapbox = list(
+    center = list(lon = 7.75, lat = 53.58),
+    zoom = 3.0),
+    showlegend = FALSE,
+    title = 'Numero di casi ogni 10000 abitanti')
+
+europeCasesMap
+```
+
+
 
 Regionale 
 =====================================
@@ -457,230 +707,8 @@ plyTestatiCasiReg
 
 
 
-```{r echo=FALSE, include=FALSE, warning = FALSE}
-### load packages ####
-library(plotly)
-library(sf)
-library(DT)
-library(tidyverse)
 
-Sys.setenv('MAPBOX_TOKEN' = 'pk.eyJ1IjoiYW5kcmVhLW0iLCJhIjoiY2s4b20zcGFpMDh5cDNldDJ4YTYwNmFlMiJ9.TReLfeIr7ZVEMYMJg2w0-g')
 
 
-prefixDir = '~/Documents/lavotex/lavori/covid_19/websites/hugo_universal_new/dati_protezione_civile'
 
-## import world shapefile 
-load('../../dati_protezione_civile/shapefile_Rformat/all_shapefiles.Rdata')
-
-## LOAD ECDC DATA ----
-# load('../../dati_protezione_civile/dati_ECDPC/world_data_2020-12-15')
-load(file = tail(dir(paste0(prefixDir,"/world_data/"), full.names = TRUE),1))
-dataOrig = data
-
-# modifiche di formato ad alcune variabili
-# dataOrig = dataOrig %>% mutate(dateRep = as.Date(dateRep, format = '%d/%m/%Y'), geoId = factor(geoId))
-
-# ## aggiunge somme di casi cumulate per paese
-# data = dataOrig %>%  group_by(geoId) %>% arrange(countriesAndTerritories, dateRep) %>% mutate(cumCases = cumsum(cases_weekly), cumDeaths = cumsum(deaths_weekly))
-
-## elimina entrate "Cases_on_an_international_conveyance_Japan"
-# data = data %>% filter(countriesAndTerritories != "Cases_on_an_international_conveyance_Japan") %>%
-#   mutate(countriesAndTerritories = gsub('_', ' ', countriesAndTerritories)) %>%
-#   mutate(countriesAndTerritories = gsub('United States of America', 'USA', countriesAndTerritories))
-
-
-
-
-############################################################
-####                  Europe data                       ####
-############################################################
-
-
-# dataEurope = data %>% filter(geoId %in% europeCodes$Two_Letter_Country_Code)
-dataEurope = data %>% filter(countryterritoryCode%in% europeCodes$Three_Letter_Country_Code)
-
-
-## setting axis
-axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Data', mirror = 'all', tickangle = 45, titlefont = f1)
-
-```
-
-
-Internazionale
-=====================================
-
-Row
-----------------------------------------
-### Paesi maggiormente colpiti (Casi totali)
-
-In questo grafico è rappresentato l’andamento del numero totale di casi per 15 paesi che hanno avuto il maggior numero di casi in termini assoluti.
-
-```{r echo=FALSE, warning=FALSE}
-data = data %>%  mutate(cumCasesRate = cumCases / popData2019 * 1000)
-
-temp = aggregate(data$cumCases, by = list(country = data$countriesAndTerritories), max)
-temp = head(temp$country[order(temp$x, decreasing = TRUE)], 15)
-
-temp = data[data$countriesAndTerritories %in% temp,]
-
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1)
-
-
-plyCases = temp %>%
-  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
-  plot_ly(x = ~dateRep, y = ~cumCases, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
-  layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di casi', legend = list(x = .05, y = .95))
-
-plyCases
-```
-
-
-### Paesi maggiormente colpiti (Casi per abitante)
-
-Numero di casi per 1000 abitanti nei paesi con il maggior numero assoluto di ammalati.
-
-```{r echo=FALSE, warning=FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi per 1000 abitanti', mirror = 'all', titlefont = f1)
-
-
-plyCasesRate = temp %>%
-  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
-  plot_ly(x = ~dateRep, y = ~cumCasesRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
-  layout(xaxis = axis_x, yaxis = axis_y, title = 'Proporzione di casi rispetto alla popolazione', legend = list(x = .05, y = .95))
-
-plyCasesRate
-```
-
-
-Row
-----------------------------------------
-### Paesi maggiormente colpiti sulla base del numero di casi per 1000 abitanti
-
-Numero di casi per 1000 abitanti nei paesi con il maggior numero di ammalati ogni 1000 abitanti, in questo caso c'è una preponderanza di paesi piccoli.
-
-```{r echo=FALSE, warning=FALSE}
-tempProp = aggregate(data$cumCasesRate, by = list(country = data$countriesAndTerritories), max)
-tempProp = head(tempProp$country[order(tempProp$x, decreasing = TRUE)], 15)
-
-tempProp = data[data$countriesAndTerritories %in% tempProp,]
-
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, mirror = 'all', titlefont = f1)
-
-
-plyCasesRate = tempProp %>%
-  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
-  plot_ly(x = ~dateRep, y = ~cumCasesRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
-  layout(xaxis = axis_x, yaxis = axis_y, title = 'Proporzione di casi rispetto alla popolazione', legend = list(x = .05, y = .95))
-
-plyCasesRate
-```
-
-### Numero di nuovi casi giornaliero
-```{r echo = FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di casi', mirror = 'all', titlefont = f1)
-
-
-plyCases = temp %>%
-  filter(dateRep >= "2020-02-20") %>% group_by(geoId) %>%
-  plot_ly(x = ~dateRep, y = ~cases_weekly, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Casi: </b>%{y}')) %>%
-  layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di casi', legend = list(x = .05, y = .95))
-
-plyCases
-```
-
-<!-- Decessi {data-navmenu='Internazionale' } -->
-<!-- ================================================== -->
-
-Row
-----------------------------------------
-### Numero di decessi rispetto alla popolazione
-```{r echo= FALSE}
-## proporzione di nuovi decessi rispetto alla popolazione ####
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di nuovi decessi per 100000 abitanti', mirror = 'all', titlefont = f1)
-
-plyNewDeathsRate = temp %>%  mutate(newDeathsRate = deaths_weekly / popData2019 * 100000) %>%
-  filter(dateRep >= "2020-02-20", popData2019 >= 1.e7) %>% group_by(geoId) %>%
-  plot_ly(x = ~dateRep, y = ~newDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>%
-  layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di decessi quotidiani per 100000 abitanti', legend = list(x = .05, y = .95))
-
-plyNewDeathsRate
-
-```
-
-Row
-----------------------------------------
-
-### Numero di decessi rispetto al numero di casi
-```{r echo=FALSE, warning=FALSE}
-axis_y <- list(showgrid = T, zeroline = F, nticks = 10, showline = T, title = 'Numero di decessi su numero di casi', mirror = 'all', titlefont = f1)
-
-plyDeathsCasesRate = temp %>%  mutate(cumDeathsRate = cumDeaths / cumCases * 100) %>%
-  filter(dateRep >= "2020-03-02", popData2019 >= 1.e7) %>% group_by(geoId) %>%
-  plot_ly(x = ~dateRep, y = ~cumDeathsRate, name = ~countriesAndTerritories, type = 'scatter', mode = 'lines', hovertemplate = paste('<b>Data: </b>%{x}\n', '<b>Decessi: </b>%{y}')) %>%
-  layout(xaxis = axis_x, yaxis = axis_y, title = 'Numero di decessi ogni 100 casi', legend = list(x = .05, y = .95))
-
-plyDeathsCasesRate
-
-```
-
-<!-- Mappe {data-navmenu='Internazionale' } -->
-<!-- ========================================= -->
-
-Row
-----------------------------------------
-### Diffusione in Europa per numero di decessi
-
-```{r map-deaths, echo=FALSE, warning=FALSE}
-dataEuropeShp = ungroup(dataEurope %>% filter(dateRep == max(dateRep)))
-dataEuropeShp = merge(dataEuropeShp, worldCapital)
-tempVars = c("countryterritoryCode", "dateRep","cases_weekly","deaths_weekly", "popData2019","continentExp","cumCases","cumDeaths","CITY_NAME","CNTRY_NAME","X","Y") 
-dataEuropeShp = dataEuropeShp[, tempVars]
-
-## add rate of cases
-dataEuropeShp = dataEuropeShp %>%
-  mutate(cumCasesRate = cumCases/popData2019*1.e4, newCasesRate = cases_weekly /popData2019 * 1.e4, cumDeathsRate = cumDeaths/popData2019 *1.e5, newDeathsRate = deaths_weekly /popData2019 * 1.e5)
-
-dataEuropeShp = dataEuropeShp %>% filter(CNTRY_NAME != 'San Marino')
-
-europeDeathMap = dataEuropeShp %>% plot_mapbox(height = 600) %>%
-  add_markers(x = ~X, y = ~Y, type = 'scatter', mode = 'markers',
-              marker = list(color = 'red',
-                            # size = ~your_list_of_size_values,
-                            size = ~cumDeathsRate,
-                            opacity = 0.5,
-                            sizemode = 'area',
-                            sizeref = .03),
-              text = paste('Decessi:', round(dataEuropeShp$cumDeathsRate, 2), '\nStato:', dataEuropeShp$CNTRY_NAME),
-              hoverinfo = 'text')  %>%
-  layout(mapbox = list(
-    center = list(lon = 7.75, lat = 53.58),
-    zoom = 3.0),
-    showlegend = FALSE,
-    title = 'Numero di decessi ogni 100000 abitanti')
-
-europeDeathMap
-
-
-```
-
-### Diffusione in Europa per numero di casi
-```{r echo = FALSE}
-europeCasesMap = dataEuropeShp %>% plot_mapbox(height = 600) %>%
-  add_markers(x = ~X, y = ~Y, type = 'scatter', mode = 'markers',
-              marker = list(color = 'darkgreen',
-                            # size = ~your_list_of_size_values,
-                            size = ~cumCasesRate,
-                            opacity = 0.5,
-                            sizemode = 'area',
-                            sizeref = .03),
-              text = paste('Casi:', round(dataEuropeShp$cumCasesRate, 2), '\nStato:', dataEuropeShp$CNTRY_NAME),
-              hoverinfo = 'text')  %>%
-  layout(mapbox = list(
-    center = list(lon = 7.75, lat = 53.58),
-    zoom = 3.0),
-    showlegend = FALSE,
-    title = 'Numero di casi ogni 10000 abitanti')
-
-europeCasesMap
-```
 
