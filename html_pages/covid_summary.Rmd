@@ -167,7 +167,7 @@ Row
 ----------------------------------------
 
 ### Nuovi casi rispetto al numero di tamponi
-```{r echo=FALSE, fig.cap="Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot. Per capire come l\'andamento di questa serie sia anche connesso al periodo in cui sono stati effettuati i tamponi si rimanda all'analogo grafico che si trova in questa [pagina](/blog/2020/12/12/covid_naz/index.html#tamponi) in cui con i colori sono mostrate anche le date."}
+```{r echo=FALSE, fig.cap="Nel grafico la linea liscia è il risultato di uno smoothing del grafico fatto con il metodo LOESS (locally estimated scatterplot smoothing). In questo modo si cerca di _estrarre_ la componente regolare dello scatterplot. Per capire come l\'andamento di questa serie sia anche connesso al periodo in cui sono stati effettuati i tamponi si rimanda all'analogo grafico che si trova in questa [pagina](/blog/covid_naz/#tamponi) in cui con i colori sono mostrate anche le date."}
 
 ## nuovi positivi vs tamponi
 axis_x <- list(showgrid = T, zeroline = F, nticks = 20, showline = T, title = 'Tamponi', mirror = 'all', tickangle = 45, titlefont = f1)
