@@ -38,11 +38,15 @@
     <loc>http://localhost:4321/tags/regression/</loc>
     <lastmod>2020-12-02T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:4321/authors/</loc>
+  </url><url>
     <loc>http://localhost:4321/contact/</loc>
   </url><url>
     <loc>http://localhost:4321/categories/didattica/</loc>
   </url><url>
     <loc>http://localhost:4321/didattica/</loc>
+  </url><url>
+    <loc>http://localhost:4321/faq/</loc>
   </url><url>
     <loc>http://localhost:4321/pagine_didattica/</loc>
   </url><url>
