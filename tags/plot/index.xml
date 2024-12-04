@@ -6,8 +6,15 @@
     <description>Recent content in Plot on Andrea Martinelli website</description>
     <generator>Hugo</generator>
     <language>it</language>
-    <lastBuildDate>Wed, 02 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:4321/tags/plot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fate le vostre analisi</title>
+      <link>http://localhost:4321/blog/fate-le-vostre-analisi/</link>
+      <pubDate>Tue, 03 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/blog/fate-le-vostre-analisi/</guid>
+      <description>&lt;script src=&#34;http://localhost:4321/blog/fate-le-vostre-analisi/index.it_files/clipboard/clipboard.min.js&#34;&gt;&lt;/script&gt;&#xA;&lt;link href=&#34;http://localhost:4321/blog/fate-le-vostre-analisi/index.it_files/primer-tooltips/build.css&#34; rel=&#34;stylesheet&#34; /&gt;&#xA;&lt;link href=&#34;http://localhost:4321/blog/fate-le-vostre-analisi/index.it_files/klippy/css/klippy.min.css&#34; rel=&#34;stylesheet&#34; /&gt;&#xA;&lt;script src=&#34;http://localhost:4321/blog/fate-le-vostre-analisi/index.it_files/klippy/js/klippy.min.js&#34;&gt;&lt;/script&gt;&#xA;&#xA;&#xA;&lt;p&gt;Questo è un post riciclato dal periodo COVID e propone un’analisi esplorativa di un dataset COVID. L’intento è quello di mostrare come utilizzare R e un’analisi grafica statica per esplorare i dati. In casi come questo con svariate serie è spesso più utile utilizzare Plotly per costruire grafici interattivi.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Hello R Markdown</title>
       <link>http://localhost:4321/blog/hello-r-markdown/</link>
